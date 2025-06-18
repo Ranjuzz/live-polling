@@ -92,7 +92,7 @@ export const FixedFooter = styled.div`
   width: 100%;
   background: white;
   border-top: 1px solid #ccc;
-  padding: 1vh 20vh 2vh 0;
+  padding: 1vh 20vh 1vh 0;
   display: flex;
   justify-content: flex-end;
   box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
