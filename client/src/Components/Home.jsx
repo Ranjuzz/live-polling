@@ -1,9 +1,19 @@
 import { RoleCard,RoleDescription,RoleSelection,RoleTitle} from './HomeStyle';
 import React, { useState } from 'react';
 import { Button, Badge,Container,Header,Title,Subtitle  } from './CommonStyles';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [selectedRole, setSelectedRole] = useState('student');
+  const navigate = useNavigate();
+
+  const handleContinue = () => {
+    if (selectedRole === 'student') {
+      navigate('/enter-name');
+    } else if (selectedRole === 'teacher') {
+      // navigate('/teacher-login') or whatever route you plan for teachers
+    }
+  };
 
   return (
     <Container>
@@ -38,7 +48,7 @@ const Home = () => {
         </RoleCard>
       </RoleSelection>
 
-      <Button>Continue</Button>
+      <Button onClick={handleContinue}>Continue</Button>
     </Container>
   );
 };

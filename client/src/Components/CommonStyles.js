@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;     
-  background-color: #F2F2F2; 
+  background-color: #FFFFFF; 
 `;
 
 export const Badge = styled.div`
@@ -31,21 +31,28 @@ export const Header = styled.div`
   text-align: left;   
 `
 
-export const Title = styled.h1`
-  font-size: 2rem;
-  margin-bottom: 0;
+export const Title = styled.div`
+  font-size: 40px;
+  color: black;
+  margin: 0 0 0 0;
   justify-self: center;
   font-weight: 400;
-  padding: 0 10px 0 10px;
+  padding: 16px 8px 16px 8px;
   strong {
-    font-weight: 650;
+    font-weight: 600;
+    
   }
 `;
 
 export const Subtitle = styled.p`
   color: #6E6E6E;
   justify-self: center;
-  margin: 0px 20px 32px 20px;
+  text-align: center;
+  margin: 0 10vw 5vw 10vw;
+  font-size: 19px;
+  strong {
+    color: black;
+  }
 `;
 
 
@@ -85,7 +92,7 @@ export const RoleDescription = styled.p`
   color: #6e6e6e;
 `;
 
-export const  Button = styled.button`
+export const Button = styled.button`
   background: linear-gradient(to right, #7765DA, #5767D0);
   color: #f2f2f2;
   border: none;
