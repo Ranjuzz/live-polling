@@ -118,3 +118,25 @@ export const SendButton = styled.button`
   cursor: pointer;
   font-size: 16px;
 `;
+
+export const ChatToggleButton = styled.button`
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  background-color: #7e51ff;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+  svg {
+    color: white;
+    font-size: 26px;
+  }
+`;

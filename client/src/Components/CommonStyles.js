@@ -37,7 +37,7 @@ export const Title = styled.div`
   margin: 0 0 0 0;
   justify-self: center;
   font-weight: 400;
-  padding: 16px 8px 16px 8px;
+  padding: 16px 8px 10px 8px;
   strong {
     font-weight: 600;
     
@@ -48,7 +48,7 @@ export const Subtitle = styled.p`
   color: #6E6E6E;
   justify-self: center;
   text-align: center;
-  margin: 0 10vw 5vw 10vw;
+  margin: 0 10vw 2vw 10vw;
   font-size: 19px;
   strong {
     color: black;
