@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  max-width: 600px;
-  min-height: 100vh;
-  margin: 0 auto;
-  padding: 80px 20px;
-  text-align: center;
-  justify-content: center; 
-  align-items: center;   
-  height: auto;
+  height: 100vh; 
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;     
+  background-color: #F2F2F2; 
 `;
 
 export const Badge = styled.div`
@@ -27,13 +26,15 @@ export const Badge = styled.div`
 
 
 export const Header = styled.div`
-    color:black;
-    place-self: center;
+  width: 100%;
+  max-width: 981px;   
+  text-align: left;   
 `
 
 export const Title = styled.h1`
   font-size: 2rem;
-  margin-bottom: 8px;
+  margin-bottom: 0;
+  justify-self: center;
   font-weight: 400;
   padding: 0 10px 0 10px;
   strong {
@@ -43,9 +44,10 @@ export const Title = styled.h1`
 
 export const Subtitle = styled.p`
   color: #6E6E6E;
-  max-width: 100vh;
+  justify-self: center;
   margin: 0px 20px 32px 20px;
 `;
+
 
 export const RoleSelection = styled.div`
   display: flex;

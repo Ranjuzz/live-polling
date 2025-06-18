@@ -1,39 +1,4 @@
 import styled from 'styled-components';
-import { Button } from './CommonStyles';
-
-export const Container = styled.div`
-  height: 100vh; 
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;     
-  background-color: #F2F2F2; 
-`;
-
-
-export const Header = styled.div`
-  width: 100%;
-  max-width: 981px;   
-  text-align: left;   
-`
-
-export const Title = styled.h1`
-  font-size: 2rem;
-  margin-bottom: 0;
-  justify-self: center;
-  font-weight: 400;
-  padding: 0 10px 0 10px;
-  strong {
-    font-weight: 650;
-  }
-`;
-
-export const Subtitle = styled.p`
-  color: #6E6E6E;
-  justify-self: center;
-  margin: 0px 20px 32px 20px;
-`;
 
 export const RoleSelection = styled.div`
   display: flex;
@@ -41,7 +6,6 @@ export const RoleSelection = styled.div`
   gap: 24px;
   margin-bottom: 40px;
   flex-wrap: wrap;
-  
 `;
 
 export const RoleCard = styled.div`

@@ -1,6 +1,6 @@
-import { Header, Title, Container,RoleCard,RoleDescription,RoleSelection,RoleTitle,Subtitle } from './HomeStyle';
+import { RoleCard,RoleDescription,RoleSelection,RoleTitle} from './HomeStyle';
 import React, { useState } from 'react';
-import { Button, Badge } from './CommonStyles';
+import { Button, Badge,Container,Header,Title,Subtitle  } from './CommonStyles';
 
 const Home = () => {
   const [selectedRole, setSelectedRole] = useState('student');
