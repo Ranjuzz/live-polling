@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './Components/Home'
-import EnterName from './Components/EnterName'
+import Home from './Components/Home/Home'
+import EnterName from './Components/EnterName/EnterName'
 function App() {
   return (
     <>

@@ -1,6 +1,6 @@
 import { RoleCard,RoleDescription,RoleSelection,RoleTitle} from './HomeStyle';
 import React, { useState } from 'react';
-import { Button, Badge,Container,Header,Title,Subtitle  } from './CommonStyles';
+import { Button, Badge,Container,Header,Title,Subtitle  } from '../CommonStyles';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
