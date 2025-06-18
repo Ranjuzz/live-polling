@@ -93,14 +93,18 @@ export const RoleDescription = styled.p`
 `;
 
 export const Button = styled.button`
-  background: linear-gradient(to right, #7765DA, #5767D0);
-  color: #f2f2f2;
-  border: none;
+  
   width: 233px;
   padding: 12px 32px;
-  font-size: 1rem;
+  font-size: 19px;
   border-radius: 34px;
+  background: linear-gradient(to right, #7765DA, #4F0DCE);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
   cursor: pointer;
+  float: right;
   transition: background 0.2s ease;
 
   &:hover {
