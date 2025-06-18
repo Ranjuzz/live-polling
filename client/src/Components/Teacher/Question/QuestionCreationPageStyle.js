@@ -39,7 +39,7 @@ export const Subtitle = styled.p`
 `;
 
 export const QuestionBox = styled.div`
-  width: 85vw;
+  width: 50vw;
   margin: 5vw 10vw 0 0;
 `;
 

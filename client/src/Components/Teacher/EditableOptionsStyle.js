@@ -10,6 +10,7 @@ export const HeaderRow = styled.div`
   justify-content: space-between;
   margin-bottom: 1rem;
   font-size: 16px;
+  width: 50%;
 `;
 
 export const OptionRow = styled.div`
@@ -17,6 +18,7 @@ export const OptionRow = styled.div`
   align-items: center;
   margin-bottom: 1rem;
   position: relative;
+  width: 50%;
 `;
 
 export const OptionIndex = styled.div`
@@ -37,6 +39,7 @@ export const OptionInput = styled.input`
   font-size: 16px;
   margin-right: 1rem;
   border-radius: 2px;
+
 `;
 
 export const RadioWrapper = styled.div`
