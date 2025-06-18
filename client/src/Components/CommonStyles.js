@@ -19,7 +19,7 @@ export const Badge = styled.div`
   align-content: center;
   text-align: center;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 14px;
   padding: 0 9px 0 7px;
   border-radius: 20px;
 `;
