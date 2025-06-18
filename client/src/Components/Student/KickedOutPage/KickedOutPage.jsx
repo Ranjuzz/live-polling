@@ -1,5 +1,5 @@
 import React from 'react'
-import { Badge, Container, Header, Subtitle,Title } from '../CommonStyles'
+import { Badge, Container, Header, Subtitle,Title } from '../../CommonStyles'
 
 const KickedOutPage = () => {
   return (

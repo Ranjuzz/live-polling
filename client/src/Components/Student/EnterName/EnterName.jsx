@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Title, Subtitle, Header, Button, Badge } from "../CommonStyles";
+import { Container, Title, Subtitle, Header, Button, Badge } from "../../CommonStyles";
 import { InputWrapper } from './EnterNameStyle'
 
 const EnterName = () => {
