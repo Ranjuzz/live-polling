@@ -11,6 +11,7 @@ export const HeaderRow = styled.div`
   margin-bottom: 1rem;
   font-size: 16px;
   width: 50%;
+  padding-right: 20px;
 `;
 
 export const OptionRow = styled.div`
@@ -46,13 +47,37 @@ export const RadioWrapper = styled.div`
   display: flex;
   gap: 1rem;
 
+  input[type='radio'] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #8a2be2; /* purple border */
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    margin-right: 6px;
+  }
+
+  input[type='radio']:checked::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    background-color: #8a2be2; /* purple dot */
+    border-radius: 50%;
+  }
+
   label {
-    font-size: 14px;
-    input {
-      margin-right: 6px;
-    }
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    cursor: pointer;
   }
 `;
+
 
 export const DeleteButton = styled.button`
   background: none;
