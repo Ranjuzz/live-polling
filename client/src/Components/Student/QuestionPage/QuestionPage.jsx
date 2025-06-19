@@ -70,7 +70,7 @@ const QuestionPage = () => {
       socket.off('poll_results', handlePollResults);
       socket.off('kicked_out', handleKickedOut); 
     };
-  }, [name, role]);
+  }, [name, role, navigate]);
 
 
   useEffect(() => {
