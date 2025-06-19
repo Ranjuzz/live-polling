@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const QuestionContainer = styled.div`
   width: 600px;
-  height: 100%;
+  height: 50%;
   margin: 0;
   place-self: center;
   background: #fff;
-  padding: 15vh 24px;
+  padding: 5vh 24px;
   border-radius: 10px;
 `;
 

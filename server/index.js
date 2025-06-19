@@ -118,22 +118,20 @@ io.on('connection', (socket) => {
       votes: voteMap,
       correctIndex: currentQuestion.correctIndex
     });
-
-    if (!pollHistory.some(p => p.id === currentQuestion.id)) {
-      pollHistory.push({
-        id: currentQuestion.id,
-        text: currentQuestion.text,
-        options: currentQuestion.options,
-        percentages,
-        votes: voteMap,
-        correctIndex: currentQuestion.correctIndex,
-        timestamp: Date.now()
-      });
-    }
-
     const totalStudents = Object.values(participants).filter(p => p.role === 'student').length;
     if (totalVotes >= totalStudents) {
       questionLocked = false;
+      if (!pollHistory.some(p => p.id === currentQuestion.id)) {
+        pollHistory.push({
+          id: currentQuestion.id,
+          text: currentQuestion.text,
+          options: currentQuestion.options,
+          percentages,
+          votes: voteMap,
+          correctIndex: currentQuestion.correctIndex,
+          timestamp: Date.now()
+        });
+      }
       clearTimeout(questionTimer); 
       io.emit('poll_completed_by_all', currentQuestion.id);
     }

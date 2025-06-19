@@ -22,7 +22,6 @@ import ChatWidget from '../Chat/ChatWidget';
 const PollResults = ({ index,  questionText, options, percentages, correctIndex, showMeta = true }) => {
   return (
     <QuestionContainer>
-      
       <QuestionHeader>
         <div>Question {index}</div>
         {showMeta && (<Timer>
@@ -30,8 +29,7 @@ const PollResults = ({ index,  questionText, options, percentages, correctIndex,
           <span>Done</span>
         </Timer>)}
       </QuestionHeader>
-    
-
+  
       <QuestionSection>
         <QuestionBox>{questionText}</QuestionBox>
         <OptionList>
