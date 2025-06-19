@@ -10,7 +10,7 @@ const EnterName = () => {
   useEffect(() => {
     const existingName = sessionStorage.getItem('studentName');
     if (existingName) {
-      navigate('/poll'); 
+      navigate('/questions'); 
     }
   }, [navigate]);
 
