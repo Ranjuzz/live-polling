@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const OptionsWrapper = styled.div`
   margin-top: 2rem;
-  max-width: 50%;
+  max-width: 60%;
 `;
 
 export const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 16px;
-  min-width: max-content;
+  width: 100%;
 `;
 
 export const Title = styled.p`
@@ -21,7 +21,7 @@ export const OptionRow = styled.div`
   align-items: center;
   margin-bottom: 1rem;
   position: relative;
-  min-width: max-content;
+  width: 100%;
 `;
 
 export const OptionIndex = styled.div`

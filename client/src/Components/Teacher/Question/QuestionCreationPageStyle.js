@@ -16,6 +16,30 @@ export const Container2 = styled.div`
   background-color: #FFFFFF;
 `;
 
+export const TimerSelect = styled.select`
+  background: #f2f2f2;
+  border: none;
+  color: black;
+  width: 100%;
+  height: 100%;
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 2px;
+  font-weight: 400;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  option {
+    color: #000;
+    background: #fff;
+  }
+
+`;
+
+
 export const Title = styled.div`
   font-size: 40px;
   color: black;
@@ -45,7 +69,7 @@ export const QuestionBox = styled.div`
 
 export const TimerDropdown = styled.div`
   background: #f2f2f2;
-  padding: 10px 18px 10px 18px;
+  padding: 10px 18px 10px 1px;
   margin: 0 0 10px 0px;
   font-size: 14px;
   border-radius: 7px;
