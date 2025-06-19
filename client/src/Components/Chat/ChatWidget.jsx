@@ -9,43 +9,39 @@ import { FiMessageSquare } from 'react-icons/fi';
 import {getSocket} from '../socket'
 const socket = getSocket();
 
-const ChatWidget = ({ userName }) => {
+const ChatWidget = () => {
   const [activeTab, setActiveTab] = useState('Chat');
   const [messages, setMessages] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [input, setInput] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-
+  const userName = sessionStorage.getItem('studentName') || "Annonymous";
   useEffect(() => {
+    
+    socket.off('new_message');
+    socket.off('participants_update');
+
+    socket.connect();
     socket.emit('join_chat', userName);
-  
-    const handleNewMessage = (msg) => {
+    socket.on('new_message', (msg) => {
       setMessages((prev) => [...prev, msg]);
-    };
-  
-    const handleParticipantsUpdate = (list) => {
+    });
+
+    socket.on('participants_update', (list) => {
       setParticipants(list);
-    };
-  
-    socket.off('new_message', handleNewMessage);
-    socket.off('participants_update', handleParticipantsUpdate);
-  
-    socket.on('new_message', handleNewMessage);
-    socket.on('participants_update', handleParticipantsUpdate);
-  
+    });
+
     return () => {
+      socket.off('new_message');
+      socket.off('participants_update');
       socket.emit('leave_chat');
-      socket.off('new_message', handleNewMessage);
-      socket.off('participants_update', handleParticipantsUpdate);
     };
   }, [userName]);
-  
 
   const handleSend = () => {
     if (input.trim()) {
-      const msg = { text: input,sender: userName }
-      socket.emit('send_message', input);
-      setMessages((prev) => [...prev, msg]);
+      console.log(userName + "Name");
+      socket.emit('send_message', input, userName);
       setInput('');
     }
   };

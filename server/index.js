@@ -16,43 +16,37 @@ const io = new Server(server, {
 
 let currentQuestion = null;
 let answers = {};
-let participants = {}; // ✅ Global participant map
+let participants = {}; 
 
 io.on('connection', (socket) => {
   console.log('✅ New client connected:', socket.id);
 
-  // 🟣 Join chat
   socket.on('join_chat', (name) => {
     participants[socket.id] = name;
     io.emit('participants_update', Object.values(participants));
   });
 
-  // 💬 Receive and broadcast chat messages
-  socket.on('send_message', (message) => {
-    const sender = participants[socket.id] || 'Anonymous';
-    io.emit('new_message', { text: message, sender }); // ✅ send to all, including sender
+  socket.on('send_message', (message, name) => {
+    const sender = name;
+    io.emit('new_message', { text: message, sender }); 
   });
 
-  // ❌ Clean up on disconnect
   socket.on('disconnect', () => {
-    console.log('❌ Client disconnected:', socket.id);
     delete participants[socket.id];
     io.emit('participants_update', Object.values(participants));
   });
 
-  // 📤 Send current question to new student
+ 
   if (currentQuestion) {
     socket.emit('new_question', currentQuestion);
   }
 
-  // 📣 Teacher asks new question
   socket.on('ask_question', (questionData) => {
     currentQuestion = questionData;
     answers = {};
     io.emit('new_question', currentQuestion);
   });
 
-  // ✅ Student submits answer
   socket.on('submit_answer', ({ name, answer }) => {
     if (!currentQuestion) return;
 

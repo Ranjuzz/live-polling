@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ChatWidget from './ChatWidget';
+import { AppContext } from '../AppContext';
 
 const ChatLayout = ({ children }) => {
+
+  const {userName} = useContext(AppContext)
+  
   return (
     <>
       {children}
-      <ChatWidget />
+      <ChatWidget userName={userName}/>
     </>
   );
 };
