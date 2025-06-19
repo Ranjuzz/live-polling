@@ -2,7 +2,10 @@ import styled from 'styled-components';
 
 // Wrapper for each result option
 export const ResultOptionWrapper = styled.div`
-  margin: 8px 0;
+  gap: 1px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 20px 10px 15px;
 `;
 
 // Progress-style filled bar with text inside
@@ -26,9 +29,9 @@ export const FilledOptionBar = styled.div`
     top: 0;
     left: 0;
     height: 100%;
+    color: ${(props) => props.highlight ? 'white' : 'black'};
     width: ${(props) => props.width}%;
-    background: ${(props) => (props.highlight ? '#8F64E1' : '#d1c4f9')};
-    opacity: 0.6;
+    background: ${(props) => (props.highlight ? '#8F64E1' : '#5767D0')};
     z-index: 0;
     transition: width 0.5s ease;
   }
@@ -69,19 +72,7 @@ export const CorrectBadge = styled.span`
   font-weight: bold;
 `;
 
-// List of voter names
-export const VoterList = styled.ul`
-  list-style: none;
-  margin-top: 6px;
-  padding-left: 0;
-  font-size: 13px;
-  color: #555;
 
-  li {
-    display: inline-block;
-    margin-right: 10px;
-  }
-`;
 
 // Footer note
 export const FooterNote = styled.p`

@@ -3,7 +3,6 @@ import {
   ResultOptionWrapper,
   FilledOptionBar,
   OptionLabel,
-  VoterList,
   CorrectBadge,
   FooterNote
 } from './PollResultsStyle';
@@ -13,10 +12,14 @@ import {
   QuestionHeader,
   Timer,
   QuestionBox,
-  QuestionSection
+  QuestionSection,
+  OptionList,
+  Option
 } from '../Student/QuestionPage/QuestionPageStyle';
 
-const PollResults = ({ questionText, options, percentages, votes, timeLeft, correctIndex }) => {
+import ChatWidget from '../Chat/ChatWidget';
+
+const PollResults = ({ questionText, options, percentages, timeLeft, correctIndex }) => {
   return (
     <QuestionContainer>
       <QuestionHeader>
@@ -29,7 +32,7 @@ const PollResults = ({ questionText, options, percentages, votes, timeLeft, corr
 
       <QuestionSection>
         <QuestionBox>{questionText}</QuestionBox>
-
+        <OptionList>
         {options.map((opt, idx) => (
           <ResultOptionWrapper key={idx}>
             <FilledOptionBar
@@ -42,19 +45,13 @@ const PollResults = ({ questionText, options, percentages, votes, timeLeft, corr
               </OptionLabel>
               <div>{(percentages?.[idx] || 0)}%</div>
             </FilledOptionBar>
-
-            {votes?.[idx]?.length > 0 && (
-              <VoterList>
-                {votes[idx].map((name, i) => (
-                  <li key={i}>{name}</li>
-                ))}
-              </VoterList>
-            )}
           </ResultOptionWrapper>
         ))}
+        </OptionList>
       </QuestionSection>
 
       <FooterNote>Wait for the teacher to ask a new question..</FooterNote>
+      <ChatWidget />
     </QuestionContainer>
   );
 };
