@@ -56,12 +56,19 @@ const QuestionPage = () => {
       setPollResults(results);
     };
 
+    const handleKickedOut = () => {
+      sessionStorage.clear(); // Optional: clear session
+      navigate('/kicked');
+    };
+
     socket.on('new_question', handleNewQuestion);
     socket.on('poll_results', handlePollResults);
+    socket.on('kicked_out', handleKickedOut);
 
     return () => {
       socket.off('new_question', handleNewQuestion);
       socket.off('poll_results', handlePollResults);
+      socket.off('kicked_out', handleKickedOut); 
     };
   }, [name, role]);
 
@@ -77,7 +84,7 @@ const QuestionPage = () => {
     return () => clearInterval(interval);
   }, [timeLeft, hasSubmitted, question]);
 
-  // 📤 Submit answer
+  
   const handleSubmit = (auto = false) => {
     if (hasSubmitted || !question) return;
 

@@ -114,6 +114,7 @@ io.on('connection', (socket) => {
       votes: voteMap,
       correctIndex: currentQuestion.correctIndex
     });
+
     const totalStudents = Object.values(participants).filter(p => p.role === 'student').length;
     if (totalVotes >= totalStudents) {
       questionLocked = false;
