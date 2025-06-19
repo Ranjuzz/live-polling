@@ -9,29 +9,41 @@ const socket = getSocket();
 
 const TeacherLiveResults = () => {
   const [pollResults, setPollResults] = useState(null);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const role = sessionStorage.getItem('role');
     if (!role || role !== 'teacher') navigate('/');
 
-    socket.on('poll_results', setPollResults);
+    const handlePollResults = (results) => {
+      setPollResults(results);
+    };
+
+    const handleNewQuestion = (question) => {
+      setCurrentQuestion(question);
+    };
+
+    socket.on('poll_results', handlePollResults);
+    socket.on('new_question', handleNewQuestion);
 
     socket.on('poll_ended_due_to_time', () => {
-       navigate('/teacher')
-       setPollResults(null);
+      setPollResults(null);
+      setCurrentQuestion(null);
+      navigate('/teacher');
     });
 
     socket.on('poll_completed_by_all', () => {
-      setPollResults(null);
+        setCurrentQuestion(null);
     });
 
     return () => {
-      socket.off('poll_results');
+      socket.off('poll_results', handlePollResults);
+      socket.off('new_question', handleNewQuestion);
       socket.off('poll_ended_due_to_time');
       socket.off('poll_completed_by_all');
     };
-  }, []);
+  }, [navigate]);
 
   return (
     <Wrapper>
@@ -47,8 +59,20 @@ const TeacherLiveResults = () => {
           timeLeft={0}
           showMeta={false}
         />
+      ) : currentQuestion ? (
+        <QuestionDisplay>
+          <h3>Question: {currentQuestion.text}</h3>
+          <ul>
+            {currentQuestion.options.map((opt, idx) => (
+              <li key={idx}>
+                <strong>{idx + 1}.</strong> {opt}
+              </li>
+            ))}
+          </ul>
+          <p><strong>Timer:</strong> {currentQuestion.timer} seconds</p>
+        </QuestionDisplay>
       ) : (
-        <p>No Poll data</p>
+        <p>Waiting for question...</p>
       )}
 
       <AskButton onClick={() => navigate('/teacher')}>
@@ -60,20 +84,28 @@ const TeacherLiveResults = () => {
 
 export default TeacherLiveResults;
 
+// Styled components
 const Wrapper = styled.div`
   padding: 2rem;
 `;
 
-const AskBtn = styled.button`
-  margin-top: 2rem;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background: #0077ff;
-  color: white;
-  border: none;
+const QuestionDisplay = styled.div`
+  padding: 1.5rem;
+  background: #f8f8f8;
   border-radius: 10px;
-  cursor: pointer;
-  &:hover {
-    background: #005edc;
+  margin-bottom: 2rem;
+
+  h3 {
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1rem;
+  }
+
+  li {
+    padding: 0.25rem 0;
   }
 `;
