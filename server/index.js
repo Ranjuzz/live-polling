@@ -26,7 +26,6 @@ let questionTimer = null;
 io.on('connection', (socket) => {
   console.log('✅ New client connected:', socket.id);
 
-  // 1. Student joins
   socket.on('join_chat', ({ name, role }) => {
     participants[socket.id] = { name, role };
     io.emit('participants_update', Object.entries(participants).map(([id, data]) => ({ id, ...data })));
@@ -36,24 +35,21 @@ io.on('connection', (socket) => {
     }
   });
 
-  // 2. Kick logic
   socket.on('kick_participant', (socketIdToKick) => {
     io.to(socketIdToKick).emit('kicked_out');
     io.sockets.sockets.get(socketIdToKick)?.disconnect();
   });
 
-  // 3. Messaging
+
   socket.on('send_message', (message, name) => {
     io.emit('new_message', { text: message, sender: name });
   });
 
-  // 4. Disconnect
   socket.on('disconnect', () => {
     delete participants[socket.id];
     io.emit('participants_update', Object.values(participants));
   });
 
-  // ✅ 5. Teacher asks a new question (only if not locked)
   socket.on('ask_question', (questionData) => {
     if (questionLocked) {
       socket.emit('question_rejected', 'Previous poll still running.');
@@ -121,6 +117,7 @@ io.on('connection', (socket) => {
     const totalStudents = Object.values(participants).filter(p => p.role === 'student').length;
     if (totalVotes >= totalStudents) {
       questionLocked = false;
+
       if (!pollHistory.some(p => p.id === currentQuestion.id)) {
         pollHistory.push({
           id: currentQuestion.id,
@@ -132,6 +129,7 @@ io.on('connection', (socket) => {
           timestamp: Date.now()
         });
       }
+      
       clearTimeout(questionTimer); 
       io.emit('poll_completed_by_all', currentQuestion.id);
     }

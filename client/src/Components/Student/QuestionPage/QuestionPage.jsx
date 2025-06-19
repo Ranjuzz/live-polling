@@ -36,7 +36,6 @@ const QuestionPage = () => {
     const handleNewQuestion = (q) => {
 
       if (question?.id === q.id) {
-        console.log("⚠️ Duplicate question received. Ignoring.");
         return;
       }
 
@@ -49,7 +48,6 @@ const QuestionPage = () => {
 
     const handlePollResults = (results) => {
       setPollResults(results);
-
     };
 
     socket.on('new_question', handleNewQuestion);
@@ -127,11 +125,13 @@ const QuestionPage = () => {
       </QuestionSection>
 
       <SubmitButton
+        type="button" 
         onClick={handleSubmit}
         disabled={selected === null || hasSubmitted || timeLeft <= 0}
       >
         Submit
       </SubmitButton>
+
 
       {hasSubmitted && <p style={{ marginTop: '10px' }}>You’ve submitted your answer!</p>}
     </QuestionContainer>
