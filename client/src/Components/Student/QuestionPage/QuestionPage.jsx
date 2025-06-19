@@ -34,6 +34,12 @@ const QuestionPage = () => {
   
   useEffect(() => {
     const handleNewQuestion = (q) => {
+
+      if (question?.id === q.id) {
+        console.log("⚠️ Duplicate question received. Ignoring.");
+        return;
+      }
+      
       setQuestion(q);
       setTimeLeft(q.timer || 60);
       setHasSubmitted(false);
@@ -43,6 +49,7 @@ const QuestionPage = () => {
 
     const handlePollResults = (results) => {
       setPollResults(results);
+
     };
 
     socket.on('new_question', handleNewQuestion);
@@ -70,16 +77,15 @@ const QuestionPage = () => {
     if (selected !== null && !hasSubmitted) {
       socket.emit('submit_answer', {
         name,
-        answer: question.options[selected]
+        answer: question.options[selected],
+        questionId: question.id
       });
       setHasSubmitted(true);
     }
   };
 
-  // 🌀 Show Loader while question is loading
   if (!question) return <Loader />;
 
-  // ✅ Show results only after submission
   if (pollResults && hasSubmitted) {
     return (
       <PollResults
@@ -93,7 +99,6 @@ const QuestionPage = () => {
     );
   }
 
-  // 🗳️ Question & Options
   return (
     <QuestionContainer>
       <QuestionHeader>

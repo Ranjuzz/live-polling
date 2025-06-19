@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Badge,
   Header,
@@ -23,8 +23,6 @@ import { QuestionHeader } from '../../Student/QuestionPage/QuestionPageStyle';
 import { FixedFooter } from '../EditableOptionsStyle';
 import {getSocket} from '../../socket'
 
-const socket = getSocket();
-
 const QuestionPage = () => {
   const navigate = useNavigate();
   const role = sessionStorage.getItem('role');
@@ -34,27 +32,54 @@ const QuestionPage = () => {
   const [questionText, setQuestionText] = useState('');
   const [options, setOptions] = useState([{ id: 1, text: '', isCorrect: null }]);
   const [timer, setTimer] = useState(60);
+  const [isPollActive, setIsPollActive] = useState(false);
+  const socket = getSocket();
+  
+  useEffect(() => {
+
+  socket.on('question_rejected', (msg) => {
+    alert(msg); // or show toast
+    setIsPollActive(true); // Still active, prevent button
+  });
+
+  socket.on('poll_ended_due_to_time', () => {
+    setIsPollActive(false); // ✅ Allow teacher to ask again
+  });
+
+  socket.on('poll_completed_by_all', () => {
+    setIsPollActive(false); // ✅ All students submitted
+  });
+
+  return () => {
+    socket.off('question_rejected');
+    socket.off('poll_ended_due_to_time');
+    socket.off('poll_completed_by_all');
+  };
+}, []);
+
 
   const handleAskQuestion = () => {
     const filledOptions = options.filter(opt => opt.text.trim() !== '');
-
+  
     if (!questionText.trim() || filledOptions.length < 2) {
       alert('Please enter a question and at least 2 options.');
       return;
     }
-
+  
     const payload = {
       text: questionText,
       options: filledOptions.map(opt => opt.text),
       timer,
     };
-
+  
     socket.emit('ask_question', payload);
     console.log('Question sent to students:', payload);
+    setIsPollActive(true); 
     setQuestionText('');
     setOptions([{ id: 1, text: '', isCorrect: null }]);
-    setTimer(60); // Reset to default if desired
+    setTimer(60);
   };
+  
 
   return (
     <>
@@ -100,7 +125,13 @@ const QuestionPage = () => {
       </Container2>
     </TeacherContainer>
     <FixedFooter>
-    <AskButton onClick={handleAskQuestion}>Ask Question</AskButton>
+    <AskButton
+  onClick={handleAskQuestion}
+  disabled={isPollActive}
+>
+  {isPollActive ? 'Waiting for current poll…' : 'Ask Question'}
+</AskButton>
+
     </FixedFooter>
   </>
   );
