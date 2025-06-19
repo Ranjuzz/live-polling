@@ -38,6 +38,7 @@ export const OptionInput = styled.input`
   flex: 1;
   padding: 0.8rem;
   background-color: #f2f2f2;
+  color: black;
   border: none;
   font-size: 16px;
   margin-right: 1rem;
