@@ -57,7 +57,7 @@ const QuestionPage = () => {
     };
 
     const handleKickedOut = () => {
-      sessionStorage.clear(); // Optional: clear session
+      sessionStorage.clear(); 
       navigate('/kicked');
     };
 
