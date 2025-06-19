@@ -1,21 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Title, Subtitle, Header, Button, Badge } from "../../CommonStyles";
 import { InputWrapper } from './EnterNameStyle';
+import { AppContext } from "../../AppContext";
 
 const EnterName = () => {
   const [name, setName] = useState('');
   const navigate = useNavigate();
+  const { setUserName } = useContext(AppContext);
 
   useEffect(() => {
     const existingName = sessionStorage.getItem('studentName');
     if (existingName) {
-      navigate('/poll'); 
+      navigate('/questions'); 
     }
   }, [navigate]);
 
   const handleContinue = () => {
     if (name.trim()) {
+      setUserName(name);
       sessionStorage.setItem('studentName', name.trim());
       navigate('/questions'); 
     }

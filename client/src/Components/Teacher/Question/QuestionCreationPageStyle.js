@@ -16,6 +16,30 @@ export const Container2 = styled.div`
   background-color: #FFFFFF;
 `;
 
+export const TimerSelect = styled.select`
+  background: #f2f2f2;
+  border: none;
+  color: black;
+  width: 100%;
+  height: 100%;
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 2px;
+  font-weight: 400;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  option {
+    color: #000;
+    background: #fff;
+  }
+
+`;
+
+
 export const Title = styled.div`
   font-size: 40px;
   color: black;
@@ -40,12 +64,12 @@ export const Subtitle = styled.p`
 
 export const QuestionBox = styled.div`
   width: 50vw;
-  margin: 5vw 10vw 0 0;
+  margin: 35px 10vw 0 0;
 `;
 
 export const TimerDropdown = styled.div`
   background: #f2f2f2;
-  padding: 10px 18px 10px 18px;
+  padding: 10px 18px 10px 1px;
   margin: 0 0 10px 0px;
   font-size: 14px;
   border-radius: 7px;
@@ -55,7 +79,7 @@ export const TimerDropdown = styled.div`
 export const TextArea = styled.textarea`
     max-width: 865px;
     min-width: 100%;
-    height: 10vh;
+    height: 11vh;
     margin-top: 0.5rem;
     border-radius: 2px;
     resize: none;
@@ -107,7 +131,6 @@ export const InputWrapper = styled.div`
 export const Editing = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-weight: 600;
   font-size: 18px;
 `;
@@ -146,7 +169,7 @@ export const AddOption = styled.div`
 `;
 
 export const AskButton = styled.button`
-  margin: 10px 20px 0;
+  margin: 10px 20px 10px;
   padding: 12px 28px;
   background: linear-gradient(to right, #7765DA, #4F0DCE);
   color: white;

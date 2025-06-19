@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   OptionsWrapper,
   OptionRow,
@@ -11,10 +11,7 @@ import {
   Title
 } from './EditableOptionsStyle';
 
-const EditableOptions = () => {
-  const [options, setOptions] = useState([
-    { id: 1, text: '', isCorrect: null }
-  ]);
+const EditableOptions = ({options, setOptions}) => {
 
   const handleAddOption = () => {
     if (options.length >= 4) return;
