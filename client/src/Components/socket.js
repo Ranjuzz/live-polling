@@ -5,7 +5,7 @@ let socket;
 
 export const getSocket = () => {
   if (!socket) {
-    socket = io('http://localhost:5000');
+    socket = io('https://live-polling-i6ij.onrender.com:5000');
   }
   return socket;
 };
