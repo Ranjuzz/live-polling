@@ -5,7 +5,9 @@ let socket;
 
 export const getSocket = () => {
   if (!socket) {
-    socket = io('https://live-polling-app-xo65.onrender.com:5000');
+    socket = io('https://live-polling-app-xo65.onrender.com', {
+      transports: ['websocket'], 
+    });
   }
   return socket;
 };
