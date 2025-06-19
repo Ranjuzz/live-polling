@@ -20,6 +20,7 @@ let answers = {};
 let participants = {};
 let questionLocked = false;
 let polls = [];
+let pollHistory = [];
 let questionTimer = null;
 
 io.on('connection', (socket) => {
@@ -118,6 +119,18 @@ io.on('connection', (socket) => {
       correctIndex: currentQuestion.correctIndex
     });
 
+    if (!pollHistory.some(p => p.id === currentQuestion.id)) {
+      pollHistory.push({
+        id: currentQuestion.id,
+        text: currentQuestion.text,
+        options: currentQuestion.options,
+        percentages,
+        votes: voteMap,
+        correctIndex: currentQuestion.correctIndex,
+        timestamp: Date.now()
+      });
+    }
+
     const totalStudents = Object.values(participants).filter(p => p.role === 'student').length;
     if (totalVotes >= totalStudents) {
       questionLocked = false;
@@ -125,6 +138,10 @@ io.on('connection', (socket) => {
       io.emit('poll_completed_by_all', currentQuestion.id);
     }
   });
+});
+
+app.get('/poll-history', (req, res) => {
+  res.json(pollHistory);
 });
 
 server.listen(5000, () => {

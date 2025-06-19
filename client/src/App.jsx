@@ -5,7 +5,7 @@ import QuestionPage from './Components/Student/QuestionPage/QuestionPage';
 import KickedOutPage from './Components/Student/KickedOutPage/KickedOutPage';
 import QuestionCreationPage from './Components/Teacher/Question/QuestionCreationPage';
 import ChatLayout from './Components/Chat/ChatLayout'; // path to ChatLayout
-import { AppContext } from './Components/AppContext';
+import PollHistory from './Components/Poll/PollHistory';
 
 function App() {
 
@@ -37,7 +37,7 @@ function App() {
           path="/history"
           element={
             <ChatLayout>
-              <Home /> 
+              <PollHistory /> 
             </ChatLayout>
           }
         />

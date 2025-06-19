@@ -1,16 +1,32 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ChatWidget from './ChatWidget';
-import { AppContext } from '../AppContext';
+import { LayoutWrapper, TopRightButton } from './ChatWidgetStyle';
 
-const ChatLayout = ({ children }) => {
+const ChatLayout = ({ children, userName }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const {userName} = useContext(AppContext)
-  
+  const isTeacher = sessionStorage.getItem('role') == 'teacher';
+  console.log(isTeacher);
+  const handleClick = () => {
+    if (location.pathname !== '/history') {
+      navigate('/history');
+    } else {
+      navigate('/teacher');
+    }
+  };
+
   return (
-    <>
+    <LayoutWrapper>
+      {isTeacher && (
+        <TopRightButton onClick={handleClick}>
+          {location.pathname === '/history' ? 'Back to Teacher' : 'Poll History'}
+        </TopRightButton>
+      )}
       {children}
-      <ChatWidget userName={userName}/>
-    </>
+      <ChatWidget userName={userName} />
+    </LayoutWrapper>
   );
 };
 

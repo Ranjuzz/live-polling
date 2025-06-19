@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Title } from '../CommonStyles';
 
 // Wrapper for each result option
 export const ResultOptionWrapper = styled.div`
@@ -84,3 +85,9 @@ export const FooterNote = styled.p`
   font-size: 15px;
   color: #444;
 `;
+
+
+export const Title1 = styled(Title)`
+  justify-self: left;
+  padding: 16px 8px 10px 0;
+`

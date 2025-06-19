@@ -140,3 +140,26 @@ export const ChatToggleButton = styled.button`
     font-size: 26px;
   }
 `;
+
+export const LayoutWrapper = styled.div`
+  position: relative;
+  padding: 1rem;
+`;
+
+export const TopRightButton = styled.button`
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;

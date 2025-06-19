@@ -39,7 +39,7 @@ const QuestionPage = () => {
         console.log("⚠️ Duplicate question received. Ignoring.");
         return;
       }
-      
+
       setQuestion(q);
       setTimeLeft(q.timer || 60);
       setHasSubmitted(false);
@@ -94,6 +94,7 @@ const QuestionPage = () => {
         percentages={pollResults.percentages}
         votes={pollResults.votes}
         timeLeft={timeLeft}
+        index = ''
         correctIndex={pollResults.correctIndex}
       />
     );

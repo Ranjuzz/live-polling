@@ -19,18 +19,18 @@ import {
 
 import ChatWidget from '../Chat/ChatWidget';
 
-const PollResults = ({ questionText, options, percentages, correctIndex, showMeta = true }) => {
+const PollResults = ({ index,  questionText, options, percentages, correctIndex, showMeta = true }) => {
   return (
     <QuestionContainer>
-      {showMeta && (
-        <QuestionHeader>
-          <div>Question</div>
-          <Timer>
-            <span>⏱️</span>
-            <span>Done</span>
-          </Timer>
-        </QuestionHeader>
-      )}
+      
+      <QuestionHeader>
+        <div>Question {index}</div>
+        {showMeta && (<Timer>
+          <span>⏱️</span>
+          <span>Done</span>
+        </Timer>)}
+      </QuestionHeader>
+    
 
       <QuestionSection>
         <QuestionBox>{questionText}</QuestionBox>
