@@ -7,7 +7,6 @@ import QuestionCreationPage from './Components/Teacher/Question/QuestionCreation
 import ChatLayout from './Components/Chat/ChatLayout'; // path to ChatLayout
 import PollHistory from './Components/Poll/PollHistory';
 import TeacherLiveResults from './Components/Teacher/TeacherLiveResults';
-import StudentLiveResults from './Components/Student/StudentLiveResults';
 function App() {
 
   return (
@@ -39,14 +38,6 @@ function App() {
           element={
             <ChatLayout>
               <TeacherLiveResults />
-            </ChatLayout>
-          }
-        />
-        <Route
-          path="/live-results"
-          element={
-            <ChatLayout>
-              <StudentLiveResults />
             </ChatLayout>
           }
         />
