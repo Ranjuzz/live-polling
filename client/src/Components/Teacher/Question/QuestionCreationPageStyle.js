@@ -169,7 +169,7 @@ export const AddOption = styled.div`
 `;
 
 export const AskButton = styled.button`
-  margin: 10px 20px 0;
+  margin: 10px 20px 10px;
   padding: 12px 28px;
   background: linear-gradient(to right, #7765DA, #4F0DCE);
   color: white;

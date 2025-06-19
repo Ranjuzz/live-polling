@@ -95,7 +95,7 @@ export const AddOptionButton = styled.button`
   color: #7e51ff;
   border: 1px solid #7e51ff;
   background: transparent;
-  margin-left: 45px;;
+  margin-left: 45px;
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 14px;
@@ -123,6 +123,6 @@ export const FixedFooter = styled.div`
   padding: 2vh 20vh 1vh 0;
   display: flex;
   justify-content: flex-end;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-  z-index: 1000;
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.05);
+  z-index: 0;
 `;

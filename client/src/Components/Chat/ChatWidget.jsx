@@ -22,7 +22,7 @@ const ChatWidget = () => {
     socket.off('participants_update');
 
     socket.connect();
-    socket.emit('join_chat', userName);
+    socket.emit('join_chat', { name: userName, role: 'student' });
     socket.on('new_message', (msg) => {
       setMessages((prev) => [...prev, msg]);
     });
@@ -37,6 +37,15 @@ const ChatWidget = () => {
       socket.emit('leave_chat');
     };
   }, [userName]);
+
+  
+  useEffect(() => {
+    socket.on('kicked_out', () => {
+      window.location.href = '/kicked'; // or use navigate('/kicked') if using `useNavigate`
+    });
+  
+    return () => socket.off('kicked_out');
+  }, []);
 
   const handleSend = () => {
     if (input.trim()) {
@@ -75,9 +84,14 @@ const ChatWidget = () => {
               </ChatBox>
             ) : (
               <ParticipantsList>
-                {participants.map((name, i) => (
-                  <Participant key={i}>{name}</Participant>
-                ))}
+                {participants.map((p) => (
+                <Participant key={p.id}>
+                  {p.name}
+                  {p.role === 'student' && (
+                    <button onClick={() => socket.emit('kick_participant', p.id)}>Kick</button>
+                  )}
+                </Participant>
+              ))}
               </ParticipantsList>
             )}
           </ChatContent>

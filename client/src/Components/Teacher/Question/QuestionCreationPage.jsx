@@ -22,6 +22,8 @@ import {
 import { QuestionHeader } from '../../Student/QuestionPage/QuestionPageStyle';
 import { FixedFooter } from '../EditableOptionsStyle';
 import {getSocket} from '../../socket'
+import ChatLayout from '../../Chat/ChatLayout';
+import ChatWidget from '../../Chat/ChatWidget';
 const socket = getSocket();
 const QuestionPage = () => {
   const [questionText, setQuestionText] = useState('');
@@ -50,6 +52,7 @@ const QuestionPage = () => {
   };
 
   return (
+    <>
     <TeacherContainer>
       <Container2>
         <Badge>✨ Intervue Poll</Badge>
@@ -89,12 +92,12 @@ const QuestionPage = () => {
         <Editing>
           <EditableOptions options={options} setOptions={setOptions} />
         </Editing>
-
-        <FixedFooter>
-          <AskButton onClick={handleAskQuestion}>Ask Question</AskButton>
-        </FixedFooter>
       </Container2>
     </TeacherContainer>
+    <FixedFooter>
+    <AskButton onClick={handleAskQuestion}>Ask Question</AskButton>
+    </FixedFooter>
+  </>
   );
 };
 

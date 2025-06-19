@@ -21,10 +21,16 @@ let participants = {};
 io.on('connection', (socket) => {
   console.log('✅ New client connected:', socket.id);
 
-  socket.on('join_chat', (name) => {
-    participants[socket.id] = name;
-    io.emit('participants_update', Object.values(participants));
+  socket.on('join_chat', ({ name, role }) => {
+    participants[socket.id] = { name, role };
+    io.emit('participants_update', Object.entries(participants).map(([id, data]) => ({ id, ...data })));
   });
+
+  socket.on('kick_participant', (socketIdToKick) => {
+    io.to(socketIdToKick).emit('kicked_out');
+    io.sockets.sockets.get(socketIdToKick)?.disconnect();
+  });
+  
 
   socket.on('send_message', (message, name) => {
     const sender = name;
