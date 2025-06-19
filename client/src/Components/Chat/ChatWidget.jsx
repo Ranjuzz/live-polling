@@ -7,6 +7,7 @@ import {
 } from './ChatWidgetStyle';
 import { FiMessageSquare } from 'react-icons/fi';
 import {getSocket} from '../socket'
+
 const socket = getSocket();
 
 const ChatWidget = () => {
@@ -64,20 +65,20 @@ const ChatWidget = () => {
       {isVisible && (
         <ChatContainer>
           <ChatHeader>
-            <Tab active={activeTab === 'Chat'} onClick={() => setActiveTab('Chat')}>Chat</Tab>
-            <Tab active={activeTab === 'Participants'} onClick={() => setActiveTab('Participants')}>Participants</Tab>
-            <TabIndicator activeTab={activeTab} />
+            <Tab $active={activeTab === 'Chat'} onClick={() => setActiveTab('Chat')}>Chat</Tab>
+            <Tab $active={activeTab === 'Participants'} onClick={() => setActiveTab('Participants')}>Participants</Tab>
+            <TabIndicator $activeTab={activeTab} />
           </ChatHeader>
 
           <ChatContent>
             {activeTab === 'Chat' ? (
               <ChatBox>
                 {messages.map((msg, i) => (
-                  <MessageContainer key={i} isUser={msg.sender === userName}>
-                    <SenderName isUser={msg.sender === userName}>
+                  <MessageContainer key={i} $isUser={msg.sender === userName}>
+                    <SenderName $isUser={msg.sender === userName}>
                       {msg.sender}
                     </SenderName>
-                    <MessageBubble isUser={msg.sender === userName}>
+                    <MessageBubble $isUser={msg.sender === userName}>
                       {msg.text}
                     </MessageBubble>
                   </MessageContainer>
@@ -92,7 +93,7 @@ const ChatWidget = () => {
                 {participants.map((p) => (
                 <Participant key={p.id}>
                   {p.name}
-                  {role === 'teacher' && p.role=='student' && (
+                  {role === 'teacher' && p.role==='student' && (
                     <button onClick={() => socket.emit('kick_participant', p.id)}>Kick</button>
                   )}
                 </Participant>

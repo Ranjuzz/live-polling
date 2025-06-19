@@ -78,7 +78,6 @@ const QuestionPage = () => {
     };
   
     socket.emit('ask_question', payload);
-    console.log('Question sent to students:', payload);
     setIsPollActive(true); 
     setTimeout(() => {
       navigate('/teacher/live');

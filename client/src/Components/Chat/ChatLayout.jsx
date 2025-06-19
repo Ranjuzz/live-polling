@@ -6,9 +6,8 @@ import { LayoutWrapper, TopRightButton } from './ChatWidgetStyle';
 const ChatLayout = ({ children, userName }) => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  
   const isTeacher = sessionStorage.getItem('role') == 'teacher';
-  console.log(isTeacher);
   const handleClick = () => {
     if (location.pathname !== '/history') {
       navigate('/history');

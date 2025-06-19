@@ -117,17 +117,23 @@ io.on('connection', (socket) => {
     const totalStudents = Object.values(participants).filter(p => p.role === 'student').length;
     if (totalVotes >= totalStudents) {
       questionLocked = false;
+      
+      const existingIndex = pollHistory.findIndex(p => p.id === currentQuestion.id);
 
-      if (!pollHistory.some(p => p.id === currentQuestion.id)) {
-        pollHistory.push({
-          id: currentQuestion.id,
-          text: currentQuestion.text,
-          options: currentQuestion.options,
-          percentages,
-          votes: voteMap,
-          correctIndex: currentQuestion.correctIndex,
-          timestamp: Date.now()
-        });
+      const newPoll = {
+        id: currentQuestion.id,
+        text: currentQuestion.text,
+        options: currentQuestion.options,
+        percentages,
+        votes: voteMap,
+        correctIndex: currentQuestion.correctIndex,
+        timestamp: Date.now()
+      };
+      
+      if (existingIndex !== -1) {
+        pollHistory[existingIndex] = newPoll;
+      } else {
+        pollHistory.push(newPoll);
       }
       
       clearTimeout(questionTimer); 

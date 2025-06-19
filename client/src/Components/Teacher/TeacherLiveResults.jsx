@@ -35,6 +35,9 @@ const TeacherLiveResults = () => {
 
     socket.on('poll_completed_by_all', () => {
         setCurrentQuestion(null);
+        setTimeout(()=> {
+          navigate('/teacher');
+        }, 2000)
     });
 
     return () => {

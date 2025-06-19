@@ -12,7 +12,7 @@ export const ResultOptionWrapper = styled.div`
 // Progress-style filled bar with text inside
 export const FilledOptionBar = styled.div`
   box-sizing: border-box;
-  background: ${(props) => (props.highlight ? '#8F64E1' : '#f2f2f2')};
+  background: ${(props) => (props.highlight ? '#AF8FF1' : '#f3f3f3')};
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
@@ -22,7 +22,7 @@ export const FilledOptionBar = styled.div`
   overflow: hidden;
   transition: background 0.3s ease;
   position: relative;
-  color: white;
+  color: ${(props) => (props.highlight ? 'white' : 'black')};
   width: 100%;
   min-width: 0; 
   

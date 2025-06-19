@@ -26,7 +26,6 @@ const PollHistory = () => {
         <p>No poll history available yet.</p>
       ) : (
         history.map((poll, index) => (
-            <>
             <div key={index} style={{ marginBottom: '2rem' }}>
                 <PollResults
                 questionText={poll.text}
@@ -37,7 +36,6 @@ const PollHistory = () => {
                 index={index+1}
                 />
             </div>
-          </>
         ))
       )}
     </div>

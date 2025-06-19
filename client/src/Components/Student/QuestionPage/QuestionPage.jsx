@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {useNavigate} from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   QuestionContainer,
   QuestionHeader,
@@ -8,11 +8,11 @@ import {
   OptionList,
   Option,
   SubmitButton,
-  QuestionSection
+  QuestionSection,
 } from './QuestionPageStyle';
 import Loader from '../../Loader/Loader';
 import PollResults from '../../Poll/PollResults';
-import {getSocket} from '../../socket'
+import { getSocket } from '../../socket';
 
 const socket = getSocket();
 
@@ -22,22 +22,28 @@ const QuestionPage = () => {
   const [question, setQuestion] = useState(null);
   const [timeLeft, setTimeLeft] = useState(60);
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const name = sessionStorage.getItem('studentName');
-  const navigate = useNavigate(); // ✅ useNavigate hook
 
-  // 🚨 Redirect to home if name is not set
+  const lastQuestionId = useRef(null);
+  const name = sessionStorage.getItem('studentName');
+  const role = sessionStorage.getItem('role');
+  const navigate = useNavigate();
+
+
   useEffect(() => {
     if (!name) {
       navigate('/');
     }
   }, [name, navigate]);
-  
-  useEffect(() => {
-    const handleNewQuestion = (q) => {
 
-      if (question?.id === q.id) {
-        return;
-      }
+ 
+  useEffect(() => {
+    if (name && role) {
+      socket.emit('join_chat', { name, role });
+    }
+
+    const handleNewQuestion = (q) => {
+      if (lastQuestionId.current === q.id) return;
+      lastQuestionId.current = q.id;
 
       setQuestion(q);
       setTimeLeft(q.timer || 60);
@@ -57,29 +63,35 @@ const QuestionPage = () => {
       socket.off('new_question', handleNewQuestion);
       socket.off('poll_results', handlePollResults);
     };
-  }, []);
+  }, [name, role]);
+
 
   useEffect(() => {
-    if (timeLeft === 0 && !hasSubmitted) {
-      setHasSubmitted(true);
-      socket.emit('submit_answer', { name, answer: null });
+    if (timeLeft === 0 && !hasSubmitted && question) {
+      handleSubmit(true); // Auto-submit as null
     }
 
     if (timeLeft <= 0 || hasSubmitted) return;
 
     const interval = setInterval(() => setTimeLeft(t => t - 1), 1000);
     return () => clearInterval(interval);
-  }, [timeLeft, hasSubmitted, name]);
+  }, [timeLeft, hasSubmitted, question]);
 
-  const handleSubmit = () => {
-    if (selected !== null && !hasSubmitted) {
-      socket.emit('submit_answer', {
-        name,
-        answer: question.options[selected],
-        questionId: question.id
-      });
-      setHasSubmitted(true);
+  // 📤 Submit answer
+  const handleSubmit = (auto = false) => {
+    if (hasSubmitted || !question) return;
+
+    if (!socket.connected) {
+      socket.connect(); 
     }
+
+    socket.emit('submit_answer', {
+      name,
+      answer: auto ? null : question.options[selected],
+      questionId: question.id,
+    });
+
+    setHasSubmitted(true);
   };
 
   if (!question) return <Loader />;
@@ -92,7 +104,6 @@ const QuestionPage = () => {
         percentages={pollResults.percentages}
         votes={pollResults.votes}
         timeLeft={timeLeft}
-        index = ''
         correctIndex={pollResults.correctIndex}
       />
     );
@@ -116,7 +127,9 @@ const QuestionPage = () => {
             <Option
               key={idx}
               selected={selected === idx}
-              onClick={() => !hasSubmitted && timeLeft > 0 && setSelected(idx)}
+              onClick={() =>
+                !hasSubmitted && timeLeft > 0 && setSelected(idx)
+              }
             >
               <span>{idx + 1}</span> {opt}
             </Option>
@@ -125,15 +138,16 @@ const QuestionPage = () => {
       </QuestionSection>
 
       <SubmitButton
-        type="button" 
-        onClick={handleSubmit}
+        type="button"
+        onClick={() => handleSubmit(false)}
         disabled={selected === null || hasSubmitted || timeLeft <= 0}
       >
         Submit
       </SubmitButton>
 
-
-      {hasSubmitted && <p style={{ marginTop: '10px' }}>You’ve submitted your answer!</p>}
+      {hasSubmitted && (
+        <p style={{ marginTop: '10px' }}>You’ve submitted your answer!</p>
+      )}
     </QuestionContainer>
   );
 };
