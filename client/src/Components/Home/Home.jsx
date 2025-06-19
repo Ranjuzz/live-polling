@@ -47,7 +47,6 @@ const Home = () => {
           </RoleDescription>
         </RoleCard>
       </RoleSelection>
-      <ChatWidget />
       <Button onClick={handleContinue}>Continue</Button>
     </Container>
   );

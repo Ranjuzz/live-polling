@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -15,33 +16,55 @@ const io = new Server(server, {
 
 let currentQuestion = null;
 let answers = {};
+let participants = {}; // ✅ Global participant map
 
 io.on('connection', (socket) => {
   console.log('✅ New client connected:', socket.id);
 
+  // 🟣 Join chat
+  socket.on('join_chat', (name) => {
+    participants[socket.id] = name;
+    io.emit('participants_update', Object.values(participants));
+  });
+
+  // 💬 Receive and broadcast chat messages
+  socket.on('send_message', (message) => {
+    const sender = participants[socket.id] || 'Anonymous';
+    io.emit('new_message', { text: message, sender }); // ✅ send to all, including sender
+  });
+
+  // ❌ Clean up on disconnect
+  socket.on('disconnect', () => {
+    console.log('❌ Client disconnected:', socket.id);
+    delete participants[socket.id];
+    io.emit('participants_update', Object.values(participants));
+  });
+
+  // 📤 Send current question to new student
   if (currentQuestion) {
-    console.log('👉 Sending current question to new student');
     socket.emit('new_question', currentQuestion);
   }
 
+  // 📣 Teacher asks new question
   socket.on('ask_question', (questionData) => {
     currentQuestion = questionData;
     answers = {};
-    console.log('📣 Teacher asked question:', questionData);
     io.emit('new_question', currentQuestion);
   });
 
+  // ✅ Student submits answer
   socket.on('submit_answer', ({ name, answer }) => {
-    const voterId = socket.id; // Unique per tab
-  
+    if (!currentQuestion) return;
+
+    const voterId = socket.id;
+
     if (!answers[voterId]) {
       answers[voterId] = { name, answer };
-  
-      // Count all answers
-      const totalVotes = Object.keys(answers).length;
+
       const voteCount = currentQuestion.options.map(() => 0);
       const voteMap = currentQuestion.options.map(() => []);
-  
+      const totalVotes = Object.keys(answers).length;
+
       for (const { name, answer } of Object.values(answers)) {
         const index = currentQuestion.options.indexOf(answer);
         if (index !== -1) {
@@ -49,27 +72,19 @@ io.on('connection', (socket) => {
           voteMap[index].push(name);
         }
       }
-  
+
       const percentages = voteCount.map(count =>
         totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0
       );
-  
-      const correctIndex = currentQuestion.correctIndex ?? -1;
-  
+
       io.emit('poll_results', {
         text: currentQuestion.text,
         options: currentQuestion.options,
         percentages,
         votes: voteMap,
-        correctIndex,
+        correctIndex: currentQuestion.correctIndex ?? -1
       });
     }
-  });
-  
-  
-
-  socket.on('disconnect', () => {
-    console.log('❌ Client disconnected:', socket.id);
   });
 });
 

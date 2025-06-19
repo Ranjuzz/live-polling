@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { io } from 'socket.io-client';
 import {
   Badge,
   Header,
@@ -22,9 +21,8 @@ import {
 
 import { QuestionHeader } from '../../Student/QuestionPage/QuestionPageStyle';
 import { FixedFooter } from '../EditableOptionsStyle';
-
-const socket = io('http://localhost:5000'); // Replace with your backend URL
-
+import {getSocket} from '../../socket'
+const socket = getSocket();
 const QuestionPage = () => {
   const [questionText, setQuestionText] = useState('');
   const [options, setOptions] = useState([{ id: 1, text: '', isCorrect: null }]);

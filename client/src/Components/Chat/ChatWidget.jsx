@@ -1,44 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  ChatContainer,
-  ChatHeader,
-  Tab,
-  TabIndicator,
-  ChatContent,
-  ParticipantsList,
-  Participant,
-  ChatBox,
-  InputWrapper,
-  TextInput,
-  SendButton,
-  ChatToggleButton,
-  MessageBubble,
-  MessageContainer,
-  SenderName
+  ChatContainer, ChatHeader, Tab, TabIndicator,
+  ChatContent, ParticipantsList, Participant,
+  ChatBox, InputWrapper, TextInput, SendButton,
+  ChatToggleButton, MessageContainer, MessageBubble, SenderName
 } from './ChatWidgetStyle';
 import { FiMessageSquare } from 'react-icons/fi';
+import {getSocket} from '../socket'
+const socket = getSocket();
 
-const ChatWidget = () => {
-  const [activeTab, setActiveTab] = useState('Participants');
+const ChatWidget = ({ userName }) => {
+  const [activeTab, setActiveTab] = useState('Chat');
   const [messages, setMessages] = useState([]);
+  const [participants, setParticipants] = useState([]);
   const [input, setInput] = useState('');
   const [isVisible, setIsVisible] = useState(false);
 
+  useEffect(() => {
+    socket.emit('join_chat', userName);
+  
+    const handleNewMessage = (msg) => {
+      setMessages((prev) => [...prev, msg]);
+    };
+  
+    const handleParticipantsUpdate = (list) => {
+      setParticipants(list);
+    };
+  
+    socket.off('new_message', handleNewMessage);
+    socket.off('participants_update', handleParticipantsUpdate);
+  
+    socket.on('new_message', handleNewMessage);
+    socket.on('participants_update', handleParticipantsUpdate);
+  
+    return () => {
+      socket.emit('leave_chat');
+      socket.off('new_message', handleNewMessage);
+      socket.off('participants_update', handleParticipantsUpdate);
+    };
+  }, [userName]);
+  
+
   const handleSend = () => {
     if (input.trim()) {
-      setMessages([...messages, { text: input, sender: 'You' }]);
+      const msg = { text: input,sender: userName }
+      socket.emit('send_message', input);
+      setMessages((prev) => [...prev, msg]);
       setInput('');
     }
   };
 
-  const participants = ['Rahul', 'Nadeem', 'Pushpender'];
-
   return (
     <>
-      <ChatToggleButton onClick={() => setIsVisible(!isVisible)}>
+      <ChatToggleButton onClick={() => setIsVisible(v => !v)}>
         <FiMessageSquare />
       </ChatToggleButton>
-
       {isVisible && (
         <ChatContainer>
           <ChatHeader>
@@ -51,11 +67,11 @@ const ChatWidget = () => {
             {activeTab === 'Chat' ? (
               <ChatBox>
                 {messages.map((msg, i) => (
-                  <MessageContainer key={i} isUser={msg.sender === 'You'}>
-                    <SenderName isUser={msg.sender === 'You'}>
+                  <MessageContainer key={i} isUser={msg.sender === userName}>
+                    <SenderName isUser={msg.sender === userName}>
                       {msg.sender}
                     </SenderName>
-                    <MessageBubble isUser={msg.sender === 'You'}>
+                    <MessageBubble isUser={msg.sender === userName}>
                       {msg.text}
                     </MessageBubble>
                   </MessageContainer>

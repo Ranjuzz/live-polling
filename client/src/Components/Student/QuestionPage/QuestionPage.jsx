@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
 import {
   QuestionContainer,
   QuestionHeader,
@@ -12,8 +11,9 @@ import {
 } from './QuestionPageStyle';
 import Loader from '../../Loader/Loader';
 import PollResults from '../../Poll/PollResults';
+import {getSocket} from '../../socket'
 
-const socket = io('http://localhost:5000'); // ✅ Reuse this across app ideally
+const socket = getSocket();
 
 const QuestionPage = () => {
   const [selected, setSelected] = useState(null);
