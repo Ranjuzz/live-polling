@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from '../CommonStyles';
 
 export const ChatContainer = styled.div`
   position: fixed;
@@ -88,8 +89,16 @@ export const ParticipantsList = styled.div`
 `;
 
 export const Participant = styled.div`
-  font-weight: 600;
+  font-weight: 400;
   color: #000;
+  display: flex;
+  justify-content: space-between;
+
+  p {
+    color: #726F6F;
+    font-size: 12px;
+  }
+
 `;
 
 export const InputWrapper = styled.div`
@@ -146,18 +155,19 @@ export const LayoutWrapper = styled.div`
   padding: 1rem;
 `;
 
-export const TopRightButton = styled.button`
+export const TopRightButton = styled(Button)`
   position: fixed;
   top: 1rem;
+  max-width: fit-content;
   right: 1rem;
-  background-color: #4caf50;
   color: white;
   border: none;
+  font-size: 16px;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
   cursor: pointer;
   z-index: 1000;
-  font-weight: bold;
+  font-weight: 400;
 
   &:hover {
     background-color: #45a049;

@@ -21,7 +21,7 @@ const ChatLayout = ({ children, userName }) => {
     <LayoutWrapper>
       {isTeacher && (
         <TopRightButton onClick={handleClick}>
-          {location.pathname === '/history' ? 'Back to Teacher' : 'Poll History'}
+          {location.pathname === '/history' ? 'Back To Question' : 'View Poll History'}
         </TopRightButton>
       )}
       {children}

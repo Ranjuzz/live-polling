@@ -66,6 +66,7 @@ export const OptionLabel = styled.div`
     justify-content: center;
     align-items: center;
   }
+  font-weight: ${(props) => (props.isCorrect ? '600' : '400')};
 `;
 
 export const CorrectBadge = styled.span`

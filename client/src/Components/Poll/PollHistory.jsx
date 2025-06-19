@@ -3,10 +3,14 @@ import axios from 'axios';
 import PollResults from '../Poll/PollResults'; 
 import { Header } from '../CommonStyles';
 import {Title1} from './PollResultsStyle'
+import { useNavigate } from 'react-router-dom';
 
 const PollHistory = () => {
+  const navigate = useNavigate();
   const [history, setHistory] = useState([]);
-
+  const role = sessionStorage.getItem('role');
+  if(role==null || role!='teacher')
+    navigate('/home');
   useEffect(() => {
     axios.get('http://localhost:5000/poll-history') 
       .then(res => setHistory(res.data))

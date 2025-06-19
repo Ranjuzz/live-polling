@@ -85,6 +85,10 @@ const ChatWidget = () => {
               </ChatBox>
             ) : (
               <ParticipantsList>
+                <Participant>
+                  <p>Name</p>
+                  <p>Options</p>
+                </Participant>
                 {participants.map((p) => (
                 <Participant key={p.id}>
                   {p.name}
