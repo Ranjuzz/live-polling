@@ -8,6 +8,7 @@ import {
   AddOptionButton,
   DeleteButton,
   HeaderRow,
+  Title
 } from './EditableOptionsStyle';
 
 const EditableOptions = () => {
@@ -44,10 +45,13 @@ const EditableOptions = () => {
   return (
     <OptionsWrapper>
       <HeaderRow>
-        <b>Edit Options</b>
-        <b>Is it Correct?</b>
+        <Title>
+            Edit Options
+        </Title>
+        <Title>
+          Is it correct?
+        </Title>
       </HeaderRow>
-      
       {options.map((option, idx) => (
         <OptionRow key={option.id}>
           <OptionIndex>{idx + 1}</OptionIndex>
@@ -57,25 +61,25 @@ const EditableOptions = () => {
             onChange={(e) => handleChange(option.id, 'text', e.target.value)}
           />
           <RadioWrapper>
-  <label>
-    <input
-      type="radio"
-      name="globalCorrectOption"
-      checked={option.isCorrect === true}
-      onChange={() => handleChange(option.id, 'isCorrect', true)}
-    />
-    Yes
-  </label>
-  <label>
-    <input
-      type="radio"
-      name={`incorrect-${option.id}`} // unique per row to isolate "No"
-      checked={option.isCorrect === false}
-      onChange={() => handleChange(option.id, 'isCorrect', false)}
-    />
-    No
-  </label>
-</RadioWrapper>
+          <label>
+            <input
+              type="radio"
+              name="globalCorrectOption"
+              checked={option.isCorrect === true}
+              onChange={() => handleChange(option.id, 'isCorrect', true)}
+            />
+            Yes
+          </label>
+          <label>
+            <input
+              type="radio"
+              name={`incorrect-${option.id}`} // unique per row to isolate "No"
+              checked={option.isCorrect === false}
+              onChange={() => handleChange(option.id, 'isCorrect', false)}
+            />
+            No
+          </label>
+        </RadioWrapper>
 
           {options.length > 1 && (
             <DeleteButton onClick={() => handleDelete(option.id)}>✕</DeleteButton>

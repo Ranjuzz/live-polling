@@ -22,7 +22,8 @@ export const InputWrapper = styled.div`
     font-weight: 400;
   }
 
-  &:active {
-    color: #F2F2F2;
+  :active {
+    background-color: #F2F2F2;
+    color: black;
   }
 `;

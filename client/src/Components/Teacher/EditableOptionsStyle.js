@@ -8,10 +8,12 @@ export const OptionsWrapper = styled.div`
 export const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
   font-size: 16px;
-  width: 50%;
-  padding-right: 20px;
+  min-width: max-content;
+`;
+
+export const Title = styled.p`
+
 `;
 
 export const OptionRow = styled.div`
@@ -19,7 +21,7 @@ export const OptionRow = styled.div`
   align-items: center;
   margin-bottom: 1rem;
   position: relative;
-  width: 50%;
+  min-width: max-content;
 `;
 
 export const OptionIndex = styled.div`
@@ -66,7 +68,7 @@ export const RadioWrapper = styled.div`
     left: 3px;
     width: 8px;
     height: 8px;
-    background-color: #8a2be2; /* purple dot */
+    background-color: #7765da; 
     border-radius: 50%;
   }
 
@@ -117,7 +119,7 @@ export const FixedFooter = styled.div`
   width: 100%;
   background: white;
   border-top: 1px solid #ccc;
-  padding: 1vh 20vh 1vh 0;
+  padding: 2vh 20vh 1vh 0;
   display: flex;
   justify-content: flex-end;
   box-shadow: 0 -2px 5px rgba(0,0,0,0.05);

@@ -4,6 +4,8 @@ import EnterName from './Components/Student/EnterName/EnterName'
 import QuestionPage from './Components/Student/QuestionPage/QuestionPage'
 import KickedOutPage from './Components/Student/KickedOutPage/KickedOutPage'
 import QuestionCreationPage from './Components/Teacher/Question/QuestionCreationPage'
+// import PollHistoryPage from './Components/Teacher/Pollhistory/Pollhistory'
+
 function App() {
   return (
     <>
@@ -15,6 +17,7 @@ function App() {
         <Route path= "/questions" element={<QuestionPage />} />
         <Route path= "/kicked" element={<KickedOutPage />} />
         <Route path= "/teacher" element={<QuestionCreationPage />} />
+        <Route path= "/history" element={<Home/>} />
       </Routes>
     </Router>
     </>
