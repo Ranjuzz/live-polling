@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
 import {
   QuestionContainer,
   QuestionHeader,
@@ -22,8 +23,15 @@ const QuestionPage = () => {
   const [timeLeft, setTimeLeft] = useState(60);
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const name = sessionStorage.getItem('studentName');
+  const navigate = useNavigate(); // ✅ useNavigate hook
 
-  // ✅ Listen to both events in a single useEffect
+  // 🚨 Redirect to home if name is not set
+  useEffect(() => {
+    if (!name) {
+      navigate('/');
+    }
+  }, [name, navigate]);
+  
   useEffect(() => {
     const handleNewQuestion = (q) => {
       setQuestion(q);
@@ -46,7 +54,6 @@ const QuestionPage = () => {
     };
   }, []);
 
-  // ⏳ Timer
   useEffect(() => {
     if (timeLeft === 0 && !hasSubmitted) {
       setHasSubmitted(true);
@@ -59,7 +66,6 @@ const QuestionPage = () => {
     return () => clearInterval(interval);
   }, [timeLeft, hasSubmitted, name]);
 
-  // 📤 Submit Handler
   const handleSubmit = () => {
     if (selected !== null && !hasSubmitted) {
       socket.emit('submit_answer', {

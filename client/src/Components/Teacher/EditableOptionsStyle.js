@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const OptionsWrapper = styled.div`
-  margin-top: 2rem;
+  margin-top: 0.85rem;
   max-width: 60%;
 `;
 
@@ -9,11 +9,11 @@ export const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 16px;
-  width: 100%;
+  min-width: 100%;
 `;
 
 export const Title = styled.p`
-
+    
 `;
 
 export const OptionRow = styled.div`

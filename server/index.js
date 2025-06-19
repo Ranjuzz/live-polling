@@ -1,12 +1,13 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-const cors = require('cors');
+import express from 'express';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import cors from 'cors';
+import { randomUUID } from 'crypto';
 
 const app = express();
 app.use(cors());
 
-const server = http.createServer(app);
+const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: '*',
@@ -14,6 +15,7 @@ const io = new Server(server, {
   }
 });
 
+const polls = []; 
 let currentQuestion = null;
 let answers = {};
 let participants = {}; 

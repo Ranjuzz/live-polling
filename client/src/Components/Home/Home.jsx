@@ -2,15 +2,17 @@ import { RoleCard,RoleDescription,RoleSelection,RoleTitle} from './HomeStyle';
 import React, { useState } from 'react';
 import { Button, Badge,Container,Header,Title,Subtitle  } from '../CommonStyles';
 import { useNavigate } from 'react-router-dom';
-import ChatWidget from '../Chat/ChatWidget';
+
 const Home = () => {
   const [selectedRole, setSelectedRole] = useState('student');
   const navigate = useNavigate();
 
   const handleContinue = () => {
     if (selectedRole === 'student') {
+      sessionStorage.setItem('role', 'student');
       navigate('/enter-name');
     } else if (selectedRole === 'teacher') {
+      sessionStorage.setItem('role', 'teacher');
       navigate('/teacher');
     }
   };

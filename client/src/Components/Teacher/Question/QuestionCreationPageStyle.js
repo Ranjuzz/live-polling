@@ -64,7 +64,7 @@ export const Subtitle = styled.p`
 
 export const QuestionBox = styled.div`
   width: 50vw;
-  margin: 5vw 10vw 0 0;
+  margin: 35px 10vw 0 0;
 `;
 
 export const TimerDropdown = styled.div`
@@ -79,7 +79,7 @@ export const TimerDropdown = styled.div`
 export const TextArea = styled.textarea`
     max-width: 865px;
     min-width: 100%;
-    height: 10vh;
+    height: 11vh;
     margin-top: 0.5rem;
     border-radius: 2px;
     resize: none;

@@ -3,7 +3,7 @@ import {
   Badge,
   Header,
 } from '../../CommonStyles';
-
+import { useNavigate } from 'react-router-dom';
 import EditableOptions from '../EditableOptions';
 import {
   Container2,
@@ -22,10 +22,15 @@ import {
 import { QuestionHeader } from '../../Student/QuestionPage/QuestionPageStyle';
 import { FixedFooter } from '../EditableOptionsStyle';
 import {getSocket} from '../../socket'
-import ChatLayout from '../../Chat/ChatLayout';
-import ChatWidget from '../../Chat/ChatWidget';
+
 const socket = getSocket();
+
 const QuestionPage = () => {
+  const navigate = useNavigate();
+  const role = sessionStorage.getItem('role');
+  if(role == null || role!='teacher') {
+    navigate('/');
+  }
   const [questionText, setQuestionText] = useState('');
   const [options, setOptions] = useState([{ id: 1, text: '', isCorrect: null }]);
   const [timer, setTimer] = useState(60);

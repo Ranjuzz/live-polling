@@ -16,6 +16,7 @@ const ChatWidget = () => {
   const [input, setInput] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const userName = sessionStorage.getItem('studentName') || "Annonymous";
+  const role = sessionStorage.getItem('role');
   useEffect(() => {
     
     socket.off('new_message');
@@ -41,7 +42,8 @@ const ChatWidget = () => {
   
   useEffect(() => {
     socket.on('kicked_out', () => {
-      window.location.href = '/kicked'; // or use navigate('/kicked') if using `useNavigate`
+      sessionStorage.clear();
+      window.location.href = '/kicked'; 
     });
   
     return () => socket.off('kicked_out');
@@ -49,7 +51,6 @@ const ChatWidget = () => {
 
   const handleSend = () => {
     if (input.trim()) {
-      console.log(userName + "Name");
       socket.emit('send_message', input, userName);
       setInput('');
     }
@@ -87,7 +88,7 @@ const ChatWidget = () => {
                 {participants.map((p) => (
                 <Participant key={p.id}>
                   {p.name}
-                  {p.role === 'student' && (
+                  {role === 'teacher' && p.role=='student' && (
                     <button onClick={() => socket.emit('kick_participant', p.id)}>Kick</button>
                   )}
                 </Participant>
