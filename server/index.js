@@ -8,7 +8,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // frontend origin here
+    origin: '*', 
     methods: ['GET', 'POST']
   }
 });
@@ -20,7 +20,7 @@ let answers = {};
 io.on('connection', (socket) => {
   console.log('New client connected:', socket.id);
 
-  // Send current poll if exists
+
   if (currentQuestion) {
     socket.emit('new_question', currentQuestion);
   }

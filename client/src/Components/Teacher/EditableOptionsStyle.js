@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const OptionsWrapper = styled.div`
   margin-top: 2rem;
-  width: 100%;
+  max-width: 50%;
 `;
 
 export const HeaderRow = styled.div`

@@ -107,7 +107,6 @@ export const InputWrapper = styled.div`
 export const Editing = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-weight: 600;
   font-size: 18px;
 `;

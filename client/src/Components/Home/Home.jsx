@@ -11,7 +11,7 @@ const Home = () => {
     if (selectedRole === 'student') {
       navigate('/enter-name');
     } else if (selectedRole === 'teacher') {
-      // navigate('/teacher-login') or whatever route you plan for teachers
+      navigate('/teacher');
     }
   };
 

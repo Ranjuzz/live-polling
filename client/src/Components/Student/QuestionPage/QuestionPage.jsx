@@ -56,7 +56,6 @@ const QuestionPage = () => {
       <Loader/>
     );
   }
-  
 
   return (
     <QuestionContainer>
