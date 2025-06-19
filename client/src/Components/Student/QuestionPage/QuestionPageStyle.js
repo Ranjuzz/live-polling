@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
 export const QuestionContainer = styled.div`
-  max-width: 600px;
-  margin: 80px auto;
+  width: 600px;
+  height: 100%;
+  margin: 0;
+  place-self: center;
   background: #fff;
-  padding: 24px;
+  padding: 15vh 24px;
   border-radius: 10px;
 `;
 

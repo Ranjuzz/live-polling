@@ -10,18 +10,25 @@ export const ResultOptionWrapper = styled.div`
 
 // Progress-style filled bar with text inside
 export const FilledOptionBar = styled.div`
+  box-sizing: border-box;
   background: ${(props) => (props.highlight ? '#8F64E1' : '#f2f2f2')};
-  color: ${(props) => (props.highlight ? 'white' : '#222')};
-  border: ${(props) => (props.highlight ? '2px solid #8F64E1' : '1px solid #ccc')};
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
   font-weight: 600;
-  position: relative;
   overflow: hidden;
   transition: background 0.3s ease;
+  position: relative;
+  color: white;
+  width: 100%;
+  min-width: 0; 
+  
+  p {
+    color: black;
+    margin: 0;
+  }
 
   &::before {
     content: '';
@@ -29,9 +36,8 @@ export const FilledOptionBar = styled.div`
     top: 0;
     left: 0;
     height: 100%;
-    color: ${(props) => props.highlight ? 'white' : 'black'};
     width: ${(props) => props.width}%;
-    background: ${(props) => (props.highlight ? '#8F64E1' : '#5767D0')};
+    background: ${(props) => (props.highlight ? '#f2f2f2' : '#5767D0')};
     z-index: 0;
     transition: width 0.5s ease;
   }
@@ -41,7 +47,7 @@ export const FilledOptionBar = styled.div`
   }
 `;
 
-// Label inside the option bar
+
 export const OptionLabel = styled.div`
   display: flex;
   align-items: center;
@@ -49,8 +55,8 @@ export const OptionLabel = styled.div`
   font-size: 15px;
 
   span {
-    background: #eee;
-    color: #333;
+    background: white;
+    color: black;
     font-weight: bold;
     border-radius: 50%;
     width: 24px;
@@ -61,7 +67,6 @@ export const OptionLabel = styled.div`
   }
 `;
 
-// Green badge for correct answer
 export const CorrectBadge = styled.span`
   background: #2ecc71;
   color: white;
@@ -72,9 +77,6 @@ export const CorrectBadge = styled.span`
   font-weight: bold;
 `;
 
-
-
-// Footer note
 export const FooterNote = styled.p`
   text-align: center;
   margin-top: 30px;

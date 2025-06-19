@@ -43,7 +43,7 @@ const PollResults = ({ questionText, options, percentages, timeLeft, correctInde
                 <span>{idx + 1}</span> {opt}
                 {idx === correctIndex && <CorrectBadge>✔</CorrectBadge>}
               </OptionLabel>
-              <div>{(percentages?.[idx] || 0)}%</div>
+              <p>{(percentages?.[idx] || 0)}%</p>
             </FilledOptionBar>
           </ResultOptionWrapper>
         ))}
