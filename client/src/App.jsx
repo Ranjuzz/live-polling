@@ -6,6 +6,7 @@ import KickedOutPage from './Components/Student/KickedOutPage/KickedOutPage';
 import QuestionCreationPage from './Components/Teacher/Question/QuestionCreationPage';
 import ChatLayout from './Components/Chat/ChatLayout'; // path to ChatLayout
 import PollHistory from './Components/Poll/PollHistory';
+import TeacherLiveResults from './Components/Teacher/TeacherLiveResults';
 
 function App() {
 
@@ -30,6 +31,14 @@ function App() {
           element={
             <ChatLayout>
               <QuestionCreationPage />
+            </ChatLayout>
+          }
+        />
+        <Route
+          path="/teacher/live"
+          element={
+            <ChatLayout>
+              <TeacherLiveResults />
             </ChatLayout>
           }
         />

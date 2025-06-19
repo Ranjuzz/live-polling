@@ -5,6 +5,7 @@ import {
 } from '../../CommonStyles';
 import { useNavigate } from 'react-router-dom';
 import EditableOptions from '../EditableOptions';
+import PollResults from '../../Poll/PollResults';
 import {
   Container2,
   TeacherContainer,
@@ -33,21 +34,25 @@ const QuestionPage = () => {
   const [options, setOptions] = useState([{ id: 1, text: '', isCorrect: null }]);
   const [timer, setTimer] = useState(60);
   const [isPollActive, setIsPollActive] = useState(false);
+
   const socket = getSocket();
   
   useEffect(() => {
 
-  socket.on('question_rejected', (msg) => {
-    alert(msg); // or show toast
-    setIsPollActive(true); // Still active, prevent button
-  });
+    
+    socket.on('question_rejected', (msg) => {
+      alert(msg); // or show toast
+      setIsPollActive(true); // Still active, prevent button
+    });
 
   socket.on('poll_ended_due_to_time', () => {
-    setIsPollActive(false); // ✅ Allow teacher to ask again
+
+    setIsPollActive(false); // Allow teacher to ask again
   });
 
   socket.on('poll_completed_by_all', () => {
-    setIsPollActive(false); // ✅ All students submitted
+
+    setIsPollActive(false); // All students submitted
   });
 
   return () => {
@@ -75,6 +80,10 @@ const QuestionPage = () => {
     socket.emit('ask_question', payload);
     console.log('Question sent to students:', payload);
     setIsPollActive(true); 
+    setTimeout(() => {
+      navigate('/teacher/live');
+    }, 500);
+
     setQuestionText('');
     setOptions([{ id: 1, text: '', isCorrect: null }]);
     setTimer(60);
@@ -103,7 +112,7 @@ const QuestionPage = () => {
             <TimerDropdown>
               <TimerSelect value={timer} onChange={(e) => setTimer(Number(e.target.value))}>
                 <option value={15}>15 seconds</option>
-                <option value={20}>20 seconds</option>
+
                 <option value={45}>45 seconds</option>
                 <option value={60}>60 seconds</option>
               </TimerSelect>
