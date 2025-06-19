@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
 export const OptionsWrapper = styled.div`
-  margin-top: 2rem;
-  width: 100%;
+  margin-top: 0.85rem;
+  max-width: 60%;
 `;
 
 export const HeaderRow = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 16px;
-  min-width: max-content;
+  min-width: 100%;
 `;
 
 export const Title = styled.p`
-
+    
 `;
 
 export const OptionRow = styled.div`
@@ -21,7 +21,7 @@ export const OptionRow = styled.div`
   align-items: center;
   margin-bottom: 1rem;
   position: relative;
-  min-width: max-content;
+  width: 100%;
 `;
 
 export const OptionIndex = styled.div`
@@ -38,6 +38,7 @@ export const OptionInput = styled.input`
   flex: 1;
   padding: 0.8rem;
   background-color: #f2f2f2;
+  color: black;
   border: none;
   font-size: 16px;
   margin-right: 1rem;
@@ -94,7 +95,7 @@ export const AddOptionButton = styled.button`
   color: #7e51ff;
   border: 1px solid #7e51ff;
   background: transparent;
-  margin-left: 45px;;
+  margin-left: 45px;
   border-radius: 8px;
   padding: 8px 16px;
   font-size: 14px;
@@ -122,6 +123,6 @@ export const FixedFooter = styled.div`
   padding: 2vh 20vh 1vh 0;
   display: flex;
   justify-content: flex-end;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-  z-index: 1000;
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.05);
+  z-index: 0;
 `;

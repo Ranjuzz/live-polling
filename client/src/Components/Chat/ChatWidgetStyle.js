@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from '../CommonStyles';
 
 export const ChatContainer = styled.div`
   position: fixed;
@@ -24,8 +25,8 @@ export const ChatHeader = styled.div`
 `;
 
 export const Tab = styled.div`
-  font-weight: ${({ active }) => (active ? '600' : '400')};
-  color: ${({ active }) => (active ? '#000' : '#777')};
+  font-weight: ${(props) => (props.$active ? '600' : '400')};
+  color:  ${(props) => (props.$active ? '#000' : '#777')};
   cursor: pointer;
 `;
 
@@ -36,7 +37,7 @@ export const TabIndicator = styled.div`
   width: 50%;
   background-color: #7765DA;
   transition: all 0.3s ease;
-  left: ${({ activeTab }) => (activeTab === 'Chat' ? '0%' : '50%')};
+  left:  ${(props) => (props.$activeTab === 'Chat' ? '0%' : '50%')};
 `;
 
 export const ChatContent = styled.div`
@@ -59,26 +60,26 @@ export const ChatBox = styled.div`
 export const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: ${({ isUser }) => (isUser ? 'flex-end' : 'flex-start')};
+  align-items: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
 `;
 
 export const SenderName = styled.span`
   font-size: 12px;
   font-weight: 600;
-  color: ${({ isUser }) => (isUser ? '#7765DA' : '#000')};
+  color: ${(props) => (props.$isUser ? '#7765DA' : '#000')};
   margin-bottom: 3px;
-  align-self: ${({ isUser }) => (isUser ? 'flex-end' : 'flex-start')};
+  align-self: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
 `;
 
 export const MessageBubble = styled.div`
-  background-color: ${({ isUser }) => (isUser ? '#7765DA' : '#373737')};
+  background-color: ${(props) => (props.$isUser ? '#7765DA' : '#373737')};
   color: white;
   padding: 10px 14px;
   border-radius: 12px;
   max-width: 75%;
   font-size: 14px;
   line-height: 1.4;
-  align-self: ${({ isUser }) => (isUser ? 'flex-end' : 'flex-start')};
+  align-self: ${(props) => (props.$isUser ? 'flex-end' : 'flex-start')};
 `;
 
 export const ParticipantsList = styled.div`
@@ -88,8 +89,16 @@ export const ParticipantsList = styled.div`
 `;
 
 export const Participant = styled.div`
-  font-weight: 600;
+  font-weight: 400;
   color: #000;
+  display: flex;
+  justify-content: space-between;
+
+  p {
+    color: #726F6F;
+    font-size: 12px;
+  }
+
 `;
 
 export const InputWrapper = styled.div`
@@ -138,5 +147,29 @@ export const ChatToggleButton = styled.button`
   svg {
     color: white;
     font-size: 26px;
+  }
+`;
+
+export const LayoutWrapper = styled.div`
+  position: relative;
+  padding: 1rem;
+`;
+
+export const TopRightButton = styled(Button)`
+  position: fixed;
+  top: 1rem;
+  max-width: fit-content;
+  right: 1rem;
+  color: white;
+  border: none;
+  font-size: 16px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  font-weight: 400;
+
+  &:hover {
+    background-color: #45a049;
   }
 `;
