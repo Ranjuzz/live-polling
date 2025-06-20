@@ -85,6 +85,12 @@ io.on('connection', (socket) => {
       createdAt: Date.now()
     };
 
+    eligibleStudentIds = new Set(
+      Object.entries(participants)
+        .filter(([_, data]) => data.role === 'student')
+        .map(([id]) => id)
+    );
+
     currentQuestion = newPoll;
     answers = {};
     questionLocked = true;
@@ -135,9 +141,9 @@ io.on('connection', (socket) => {
       correctIndex: currentQuestion.correctIndex
     });
 
-    const totalStudents = Object.values(participants).filter(p => p.role === 'student').length;
+    const totalExpected = eligibleStudentIds.size;
 
-    if (totalVotes >= totalStudents) {
+    if (Object.keys(answers).length >= totalExpected) {
       questionLocked = false;
 
       const newPoll = {
