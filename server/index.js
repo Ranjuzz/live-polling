@@ -25,7 +25,7 @@ let participants = {};
 let questionLocked = false;
 let polls = [];
 let questionTimer = null;
-let eligibleStudentIds = {}
+let eligibleStudentIds = new Set();
 
 const savePollToFile = async (poll) => {
   try {
@@ -99,14 +99,44 @@ io.on('connection', (socket) => {
 
     io.emit('new_question', currentQuestion);
 
-    questionTimer = setTimeout(() => {
+    // ⏳ Timer ends: then save the poll
+    questionTimer = setTimeout(async () => {
       questionLocked = false;
-      io.emit('poll_ended_due_to_time', currentQuestion.id);
+
+      const voteCount = currentQuestion.options.map(() => 0);
+      const voteMap = currentQuestion.options.map(() => []);
+
+      for (const { name, answer } of Object.values(answers)) {
+        const index = currentQuestion.options.indexOf(answer);
+        if (index !== -1) {
+          voteCount[index]++;
+          voteMap[index].push(name);
+        }
+      }
+
+      const totalVotes = Object.keys(answers).length;
+      const percentages = voteCount.map(count =>
+        totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0
+      );
+
+      const finalPoll = {
+        id: currentQuestion.id,
+        text: currentQuestion.text,
+        options: currentQuestion.options,
+        percentages,
+        votes: voteMap,
+        correctIndex: currentQuestion.correctIndex,
+        timestamp: Date.now()
+      };
+
+      await savePollToFile(finalPoll);
+
+      io.emit('poll_completed_by_all', currentQuestion.id);
     }, newPoll.timer * 1000);
   });
 
-  socket.on('submit_answer', async ({ name, answer, questionId }) => {
-    if (!currentQuestion || questionId !== currentQuestion.id) return;
+  socket.on('submit_answer', ({ name, answer, questionId }) => {
+    if (!currentQuestion || questionId !== currentQuestion.id || !questionLocked) return;
 
     const voterId = socket.id;
     if (answers[voterId]) return;
@@ -141,28 +171,6 @@ io.on('connection', (socket) => {
       votes: voteMap,
       correctIndex: currentQuestion.correctIndex
     });
-
-    const totalExpected = eligibleStudentIds.size;
-    console.log('Eligible student count:', eligibleStudentIds.size);
-
-    if (Object.keys(answers).length >= totalExpected) {
-      questionLocked = false;
-
-      const newPoll = {
-        id: currentQuestion.id,
-        text: currentQuestion.text,
-        options: currentQuestion.options,
-        percentages,
-        votes: voteMap,
-        correctIndex: currentQuestion.correctIndex,
-        timestamp: Date.now()
-      };
-
-      await savePollToFile(newPoll);
-
-      clearTimeout(questionTimer);
-      io.emit('poll_completed_by_all', currentQuestion.id);
-    }
   });
 });
 
