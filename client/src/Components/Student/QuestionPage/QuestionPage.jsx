@@ -13,6 +13,7 @@ import {
 import Loader from '../../Loader/Loader';
 import PollResults from '../../Poll/PollResults';
 import { getSocket } from '../../socket';
+import KickedOutPage from '../KickedOutPage/KickedOutPage'
 
 const socket = getSocket();
 
@@ -22,6 +23,8 @@ const QuestionPage = () => {
   const [question, setQuestion] = useState(null);
   const [timeLeft, setTimeLeft] = useState(60);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [kickedOut, setKickedOut] = useState(false);
+
 
   const lastQuestionId = useRef(null);
   const name = sessionStorage.getItem('studentName');
@@ -29,14 +32,20 @@ const QuestionPage = () => {
   const navigate = useNavigate();
 
 
-  useEffect(() => {
-    if (!name) {
-      navigate('/');
-    }
-  }, [name, navigate]);
+  // useEffect(() => {
+  //   if (!name) {
+  //     navigate('/');
+  //   }
+  // }, [name, navigate]);
 
  
   useEffect(() => {
+    const wasKicked = sessionStorage.getItem('kicked') === 'true';
+    if (wasKicked) {
+      navigate('/kicked');
+      return; 
+    }
+
     if (name && role) {
       socket.emit('join_chat', { name, role });
     }
@@ -57,8 +66,9 @@ const QuestionPage = () => {
     };
 
     const handleKickedOut = () => {
-      sessionStorage.clear(); 
-      navigate('/kicked');
+      sessionStorage.removeItem('studentName');
+      sessionStorage.setItem('kicked', 'true');
+      setKickedOut(true);
     };
 
     socket.on('new_question', handleNewQuestion);
@@ -101,6 +111,9 @@ const QuestionPage = () => {
     setHasSubmitted(true);
   };
 
+  if (kickedOut) {
+    navigate('/kicked');
+  }
   if (!question) return <Loader />;
 
   if (pollResults && hasSubmitted) {

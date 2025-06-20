@@ -19,29 +19,27 @@ const ChatWidget = () => {
   const userName = sessionStorage.getItem('studentName') || "Annonymous";
   const role = sessionStorage.getItem('role');
   useEffect(() => {
-    
-    socket.connect();
-    socket.emit('join_chat', { name: userName, role: role });
+    const wasKicked = sessionStorage.getItem('kicked') === 'true';
+    if (wasKicked) return;
     socket.on('new_message', (msg) => {
       setMessages((prev) => [...prev, msg]);
     });
-
+  
     socket.on('participants_update', (list) => {
       setParticipants(list);
     });
-
+  
     return () => {
       socket.off('new_message');
       socket.off('participants_update');
-      socket.emit('leave_chat');
     };
-  }, [userName, role]);
+  }, []);
+  
 
   
   useEffect(() => {
     socket.on('kicked_out', () => {
-      sessionStorage.clear();
-      window.location.href = '/kicked'; 
+       sessionStorage.setItem('kicked', 'true');
     });
   
     return () => socket.off('kicked_out');

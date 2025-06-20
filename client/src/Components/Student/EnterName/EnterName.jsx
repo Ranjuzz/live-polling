@@ -11,6 +11,7 @@ const EnterName = () => {
 
   useEffect(() => {
     const existingName = sessionStorage.getItem('studentName');
+    sessionStorage.setItem('role', 'student')
     if (existingName) {
       navigate('/questions'); 
     }
@@ -20,6 +21,7 @@ const EnterName = () => {
     if (name.trim()) {
       setUserName(name);
       sessionStorage.setItem('studentName', name.trim());
+      sessionStorage.setItem('role', 'student')
       navigate('/questions'); 
     }
   };
