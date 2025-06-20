@@ -3,6 +3,8 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
 import { randomUUID } from 'crypto';
+import { promises as fs } from 'fs';
+import path from 'path';
 
 const app = express();
 app.use(cors());
@@ -15,13 +17,32 @@ const io = new Server(server, {
   }
 });
 
+const HISTORY_FILE = path.join(process.cwd(), 'pollHistory.json');
+
 let currentQuestion = null;
 let answers = {};
 let participants = {};
 let questionLocked = false;
 let polls = [];
-let pollHistory = [];
 let questionTimer = null;
+
+const savePollToFile = async (poll) => {
+  try {
+    let existing = [];
+    try {
+      const data = await fs.readFile(HISTORY_FILE, 'utf8');
+      existing = JSON.parse(data);
+    } catch (err) {
+      if (err.code !== 'ENOENT') throw err;
+    }
+
+    existing.push(poll);
+    await fs.writeFile(HISTORY_FILE, JSON.stringify(existing, null, 2));
+    console.log('✅ Poll saved to file');
+  } catch (err) {
+    console.error('❌ Error saving poll to file:', err);
+  }
+};
 
 io.on('connection', (socket) => {
   console.log('✅ New client connected:', socket.id);
@@ -39,7 +60,6 @@ io.on('connection', (socket) => {
     io.to(socketIdToKick).emit('kicked_out');
     io.sockets.sockets.get(socketIdToKick)?.disconnect();
   });
-
 
   socket.on('send_message', (message, name) => {
     io.emit('new_message', { text: message, sender: name });
@@ -78,7 +98,7 @@ io.on('connection', (socket) => {
     }, newPoll.timer * 1000);
   });
 
-  socket.on('submit_answer', ({ name, answer, questionId }) => {
+  socket.on('submit_answer', async ({ name, answer, questionId }) => {
     if (!currentQuestion || questionId !== currentQuestion.id) return;
 
     const voterId = socket.id;
@@ -116,10 +136,9 @@ io.on('connection', (socket) => {
     });
 
     const totalStudents = Object.values(participants).filter(p => p.role === 'student').length;
+
     if (totalVotes >= totalStudents) {
       questionLocked = false;
-      
-      const existingIndex = pollHistory.findIndex(p => p.id === currentQuestion.id);
 
       const newPoll = {
         id: currentQuestion.id,
@@ -130,23 +149,29 @@ io.on('connection', (socket) => {
         correctIndex: currentQuestion.correctIndex,
         timestamp: Date.now()
       };
-      
-      if (existingIndex !== -1) {
-        pollHistory[existingIndex] = newPoll;
-      } else {
-        pollHistory.push(newPoll);
-      }
-      
-      clearTimeout(questionTimer); 
+
+      await savePollToFile(newPoll);
+
+      clearTimeout(questionTimer);
       io.emit('poll_completed_by_all', currentQuestion.id);
     }
   });
 });
 
-app.get('/poll-history', (req, res) => {
-  res.json(pollHistory);
+app.get('/poll-history', async (req, res) => {
+  try {
+    const data = await fs.readFile(HISTORY_FILE, 'utf8');
+    const parsed = JSON.parse(data);
+    res.json(parsed);
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      res.json([]);
+    } else {
+      res.status(500).json({ error: 'Failed to read poll history' });
+    }
+  }
 });
 
 server.listen(5000, () => {
-  // console.log('🚀 Server running on http://localhost:5000');
+  console.log('🚀 Server running on http://localhost:5000');
 });

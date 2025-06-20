@@ -1,0 +1,22 @@
+[
+  {
+    "id": "f8b62d65-6dc3-44bb-800d-0c18f91b7282",
+    "text": "Hello there",
+    "options": [
+      "q",
+      "2"
+    ],
+    "percentages": [
+      100,
+      0
+    ],
+    "votes": [
+      [
+        "Ranjith"
+      ],
+      []
+    ],
+    "correctIndex": -1,
+    "timestamp": 1750397375355
+  }
+]

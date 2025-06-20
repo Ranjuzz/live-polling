@@ -81,7 +81,7 @@ const QuestionPage = () => {
     setIsPollActive(true); 
     setTimeout(() => {
       navigate('/teacher/live');
-    }, 500);
+    }, 1000);
 
     setQuestionText('');
     setOptions([{ id: 1, text: '', isCorrect: null }]);
