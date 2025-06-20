@@ -37,7 +37,7 @@ const TeacherLiveResults = () => {
         setCurrentQuestion(null);
         setTimeout(()=> {
           navigate('/teacher');
-        }, 2000)
+        }, 3000)
     });
 
     return () => {

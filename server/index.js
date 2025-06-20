@@ -25,6 +25,7 @@ let participants = {};
 let questionLocked = false;
 let polls = [];
 let questionTimer = null;
+let eligibleStudentIds = {}
 
 const savePollToFile = async (poll) => {
   try {
@@ -142,6 +143,8 @@ io.on('connection', (socket) => {
     });
 
     const totalExpected = eligibleStudentIds.size;
+    console.log('Eligible student count:', eligibleStudentIds.size);
+
 
     if (Object.keys(answers).length >= totalExpected) {
       questionLocked = false;
