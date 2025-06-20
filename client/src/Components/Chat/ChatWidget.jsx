@@ -16,7 +16,7 @@ const ChatWidget = () => {
   const [participants, setParticipants] = useState([]);
   const [input, setInput] = useState('');
   const [isVisible, setIsVisible] = useState(false);
-  const userName = sessionStorage.getItem('studentName') || "Annonymous";
+  const userName = sessionStorage.getItem('studentName') || "Teacher";
   const role = sessionStorage.getItem('role');
   useEffect(() => {
     const wasKicked = sessionStorage.getItem('kicked') === 'true';
