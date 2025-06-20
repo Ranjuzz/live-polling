@@ -20,11 +20,8 @@ const ChatWidget = () => {
   const role = sessionStorage.getItem('role');
   useEffect(() => {
     
-    socket.off('new_message');
-    socket.off('participants_update');
-
     socket.connect();
-    socket.emit('join_chat', { name: userName, role: 'student' });
+    socket.emit('join_chat', { name: userName, role: role });
     socket.on('new_message', (msg) => {
       setMessages((prev) => [...prev, msg]);
     });
@@ -38,7 +35,7 @@ const ChatWidget = () => {
       socket.off('participants_update');
       socket.emit('leave_chat');
     };
-  }, [userName]);
+  }, [userName, role]);
 
   
   useEffect(() => {
